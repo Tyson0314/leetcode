@@ -11,8 +11,6 @@ package leetcode;
  * @author Tyson
  * @create 2019/4/10/0010 15:21
  * @since 1.0.0
- * 题目：
- * 思路：判断
  */
 public class DetectCycle {
     public ListNode detectCycle(ListNode head) {
