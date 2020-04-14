@@ -125,7 +125,7 @@ class Solution {
 
 ## 盛最多水的容器
 
-![1586272990587](C:\Users\Tyson\AppData\Roaming\Typora\typora-user-images\1586272990587.png)
+![1586272990587](.\img\1586272990587.png)
 
 左右指针，数字小的指针往数字大的指针移动，面积才有可能变大。注意左右指针数字相同的情况。
 
@@ -156,9 +156,9 @@ class Solution {
 
 先排序，双指针。注意去除重复三元组。
 
-![1586533893125](C:\Users\Tyson\AppData\Roaming\Typora\typora-user-images\1586533893125.png)
+![1586533893125](.\img\1586533893125.png)
 
-![1586534003083](C:\Users\Tyson\AppData\Roaming\Typora\typora-user-images\1586534003083.png)
+![1586534003083](.\img\1586534003083.png)
 
 ```java
 class Solution {
@@ -518,4 +518,62 @@ class Solution {
     }
 }
 ```
+
+
+
+## 下一个排列
+
+1、找到a[i-1] < a[i]；
+
+2、找到a[j] > a[i - 1]> a[j - 1];
+
+3、调换a[i - 1] 和 a[j] 位置；
+
+4、翻转a[i]以后的数组；
+
+特殊情况：数组降序排列，返回升序的数组。
+
+![1586876929532](.\img\nextPermutation.png)
+
+```java
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+        int i = nums.length - 1;
+        while (i > 0 && nums[i] <= nums[i - 1]) {//注意等号
+            i--;
+        }
+        if (i == 0) {
+            reverse(nums, 0);
+            return;
+        }
+        int j = i;
+        for (; j < nums.length; j++) {
+            if (nums[i - 1] >= nums[j]) {//注意等号
+                break;
+            }
+        }
+        j--;//取前一个元素
+        swap(nums, i - 1, j);
+        reverse(nums, i);
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
+    public void reverse(int[] nums, int i) {
+        int j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i++, j--);
+        }
+    }
+}
+```
+
+
 
