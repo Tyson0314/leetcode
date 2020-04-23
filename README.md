@@ -658,3 +658,238 @@ class Solution {
 }
 ```
 
+
+
+## 移除元素
+
+前后双指针。
+
+```java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+        while (start < end) {
+            if (nums[start] == val) {
+                nums[start] = nums[end];
+                end--;
+            } else {
+                start++;
+            }
+        }
+        return nums[start] == val ? start : start + 1;//需判断start处元素
+    }
+}
+```
+
+
+
+## 字符串相乘
+
+参考自：https://leetcode-cn.com/problems/multiply-strings/solution/you-hua-ban-shu-shi-da-bai-994-by-breezean/
+
+![1587226241610](.\img\1587226241610.png)
+
+```java
+class Solution {
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) { //乘0
+            return "0";
+        }
+        int[] arr = new int[num1.length() + num2.length()];
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int m = num1.charAt(i) - '0';
+            for (int j = num2.length() - 1; j >= 0; j--) {
+                int n = num2.charAt(j) - '0';
+                int sum = arr[i + j + 1] + m * n;
+                arr[i + j + 1] = sum % 10;
+                arr[i + j] += sum / 10; //+=，不能忘了原先的数
+            }
+        }
+
+        StringBuilder ans = new StringBuilder("");
+        if (arr[0] != 0) {
+            ans.append(arr[0]);
+        }
+        for (int i = 1; i < arr.length; i++) {
+            ans.append(arr[i]);
+        }
+        
+        return ans.toString();
+    }
+}
+```
+
+
+
+## 有效的数独
+
+关键在于找到子数独的规律：`box_index = (row / 3) * 3 + columns / 3`
+
+![1587260486363](.\img\1587260486363.png)
+
+```java
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int[][] row = new int[9][9]; //二维数组初始化
+        int[][] column = new int[9][9];
+        int[][] box = new int[9][9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                }
+                int num = board[i][j] - '1';//数字1-9对应下标0-8
+                int boxIndex = (i/3)*3 + j/3;
+
+                if (row[i][num] > 0 || column[j][num] > 0 || box[boxIndex][num] > 0) {
+                    return false;
+                }
+
+                row[i][num] = 1;
+                column[j][num] = 1;
+                box[boxIndex][num] = 1;
+
+            }
+        }
+
+        return true;
+    }
+}
+```
+
+
+
+## 全排列
+
+回溯。注意与组合总和的区别（数字有无顺序）。
+
+```java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        boolean[] flag = new boolean[nums.length];
+        ArrayDeque<Integer> path = new ArrayDeque<>();
+        permuteHelper(nums, flag, path);
+
+        return ans;
+    }
+
+    private void permuteHelper(int[] nums, boolean[] flag, ArrayDeque<Integer> path) {
+        if (path.size() == nums.length) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (flag[i]) {
+                continue;//继续循环
+            }
+            path.addLast(nums[i]);
+            flag[i] = true;
+            permuteHelper(nums, flag, path);
+            path.removeLast();
+            flag[i] = false;
+        }
+    }
+}
+```
+
+
+
+## 全排列II
+
+给定一个可包含重复数字的序列，返回所有不重复的全排列。注意与组合总和的区别。
+
+1、排序；2、同一层级相同元素剪枝。参考自：https://leetcode-cn.com/problems/permutations-ii/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liwe-2/
+
+![1587518213329](C:\Users\Tyson\AppData\Roaming\Typora\typora-user-images\1587518213329.png)
+
+```java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return ans;
+        }
+        ArrayDeque<Integer> path = new ArrayDeque<>();
+        boolean[] used = new boolean[nums.length];
+        Arrays.sort(nums);//切记
+        dps(nums, used, path);
+
+        return ans;
+    }
+
+    private void dps(int[] nums, boolean[] used, ArrayDeque<Integer> path) {
+        if (path.size() == nums.length) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            if ((i > 0 && nums[i] == nums[i - 1]) && !used[i - 1]) {//同一层相同的元素，剪枝
+                continue;//继续循环，不是return退出循环
+            }
+            path.addLast(nums[i]);
+            used[i] = true;
+            dps(nums, used, path);
+            path.removeLast();
+            used[i] = false;
+        }
+    }
+}
+```
+
+
+
+## 实现 strStr()
+
+kmp算法，参考自：https://leetcode-cn.com/problems/implement-strstr/solution/kmp-suan-fa-xiang-jie-by-labuladong/
+
+```java
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if (needle.equals("")) {
+            return 0;
+        }
+        if (needle.length() > haystack.length()) {
+            return -1;
+        }
+        int len = needle.length();
+        int[][] next = new int[len][256];
+        next[0][needle.charAt(0)] = 1;
+        int X = 0;
+        //构建状态转移图
+        for (int i = 1; i < len; i++) {
+            for (int c = 0; c < 256; c++) {
+                if (needle.charAt(i) == c) {
+                    next[i][c] = i + 1;//推进状态
+                } else {
+                    next[i][c] = next[X][c];
+                }
+            }
+            X = next[X][needle.charAt(i)];//更新影子状态
+        }
+
+        int m = 0;//needle初始态
+        for (int i = 0; i < haystack.length(); i++) {
+            m = next[m][haystack.charAt(i)];//计算needle下一状态
+            //到达终止态
+            if (m == len) {
+                return i - len + 1;
+            }
+        }
+
+        return -1;
+    }
+}
+```
+
+
+
