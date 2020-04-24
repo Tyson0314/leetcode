@@ -893,3 +893,30 @@ class Solution {
 
 
 
+## 字母异位词分组
+
+![1587655391555](.\img\1587655391555.png)
+
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return new ArrayList();
+        }
+
+        Map<String, List> ans = new HashMap<>();
+        for (String s : strs) {
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+            String key = String.valueOf(arr);
+            if (!ans.containsKey(key)) {
+                ans.put(key, new ArrayList());
+            }
+            ans.get(key).add(s);
+        }
+
+        return new ArrayList(ans.values());//没有<>
+    }
+}
+```
+
