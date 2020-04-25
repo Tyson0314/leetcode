@@ -920,3 +920,139 @@ class Solution {
 }
 ```
 
+
+
+## pow(x, n)
+
+快速幂算法。
+
+```java
+class Solution {
+    public double myPow(double x, int n) {
+        if (n == 0) {
+            return 1.0;
+        }
+        if (n == -1) {//负数边界
+            return 1 / x;
+        }
+        double res = myPow(x, n / 2);
+        double ans = 0;
+        if (n % 2 == 0) {
+            ans = res * res;
+        } else {
+            ans = n > 0 ? res * res * x : res * res / x;
+        }
+
+        return ans;
+    }
+}
+```
+
+
+
+## 旋转图像
+
+先转置，然后翻转每一行。
+
+```java
+class Solution {
+    public void rotate(int[][] matrix) {
+        if (matrix == null || matrix.length <= 1) {
+            return;
+        }
+        //转置
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i + 1; j < matrix.length; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+        //翻转每一行
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length / 2; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][matrix.length - j - 1];
+                matrix[i][matrix.length - j - 1] = tmp;
+            }
+        }
+    }
+}
+```
+
+
+
+## 跳跃游戏
+
+贪心算法。
+
+```java
+class Solution {
+    public boolean canJump(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return true;
+        }
+
+        int maxIndex = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (maxIndex >= i) {
+                maxIndex = Math.max(maxIndex, i + nums[i]);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+```
+
+
+
+## 螺旋矩阵
+
+定义上下左右四个边界。
+
+```java
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) {
+            return ans;
+        }
+        int top = 0;
+        int bottom = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+        while (true) {
+            for (int i = left; i <= right; i++) {
+                ans.add(matrix[top][i]);
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int j = top; j <= bottom; j++) {
+                ans.add(matrix[j][right]);
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int m = right; m >= left; m--) {
+                ans.add(matrix[bottom][m]);
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int n = bottom; n >= top; n--) {
+                ans.add(matrix[n][left]);
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+
+        return ans;
+    }
+}
+```
+
