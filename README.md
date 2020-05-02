@@ -1011,7 +1011,7 @@ class Solution {
 
 ## 螺旋矩阵
 
-定义上下左右四个边界。
+定义上下左右四个边界。注意边界判断。
 
 ```java
 class Solution {
@@ -1052,6 +1052,143 @@ class Solution {
         }
 
         return ans;
+    }
+}
+```
+
+
+
+## 合并区间
+
+先对区间左边界排序 `Array.sort(arr, (i1, i2) -> i1[0] - i2[0])`，然后新建数组进行合并。
+
+```java
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            throw new IllegalArgumentException("array is null or array is empty");
+        }
+        Arrays.sort(intervals, (i1, i2) -> i1[0] - i2[0]);//返回值是int
+        int[][] ans = new int[intervals.length][2];
+        ans[0] = intervals[0];
+        int index = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] > ans[index][1]) {
+                ans[++index] = intervals[i];
+            } else {
+                ans[index][1] = Math.max(ans[index][1], intervals[i][1]);
+            }
+        }
+
+        return Arrays.copyOf(ans, index + 1);//第二个参数是数组长度
+    }
+}
+```
+
+
+
+## 螺旋矩阵II
+
+定义上下左右边界。
+
+```java
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int left = 0;
+        int right = n - 1;
+        int top = 0;
+        int bottom = n - 1;
+        
+        int[][] ans = new int[n][n];
+        int num = 1;
+        while (true) {
+            for (int i = left; i <= right; i++) {
+                ans[top][i] = num++;//注意下标顺序
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int j = top; j <= bottom; j++) {
+                ans[j][right] = num++;
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int m = right; m >= left; m--) {
+                ans[bottom][m] = num++;
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int k = bottom; k >= top; k--) {
+                ans[k][left] = num++;
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
+## 第 k 个排列
+
+[参考代码](https://leetcode-cn.com/problems/permutation-sequence/comments/)
+
+```java
+class Solution {
+            /**
+        直接用回溯法做的话需要在回溯到第k个排列时终止就不会超时了, 但是效率依旧感人
+        可以用数学的方法来解, 因为数字都是从1开始的连续自然数, 排列出现的次序可以推
+        算出来, 对于n=4, k=15 找到k=15排列的过程:
+        
+        1 + 对2,3,4的全排列 (3!个)         
+        2 + 对1,3,4的全排列 (3!个)         3, 1 + 对2,4的全排列(2!个)
+        3 + 对1,2,4的全排列 (3!个)-------> 3, 2 + 对1,4的全排列(2!个)-------> 3, 2, 1 + 对4的全排列(1!个)-------> 3214
+        4 + 对1,2,3的全排列 (3!个)         3, 4 + 对1,2的全排列(2!个)         3, 2, 4 + 对1的全排列(1!个)
+        
+        确定第一位:
+            k = 14(从0开始计数)
+            index = k / (n-1)! = 2, 说明第15个数的第一位是3 
+            更新k
+            k = k - index*(n-1)! = 2
+        确定第二位:
+            k = 2
+            index = k / (n-2)! = 1, 说明第15个数的第二位是2
+            更新k
+            k = k - index*(n-2)! = 0
+        确定第三位:
+            k = 0
+            index = k / (n-3)! = 0, 说明第15个数的第三位是1
+            更新k
+            k = k - index*(n-3)! = 0
+        确定第四位:
+            k = 0
+            index = k / (n-4)! = 0, 说明第15个数的第四位是4
+        最终确定n=4时第15个数为3214 
+        **/
+    public String getPermutation(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        List<Integer> candidates = new ArrayList<>();
+        //阶乘
+        int[] arr = new int[n + 1];
+        arr[0] = 1;
+        for (int i = 1; i < n + 1; i++) {
+            candidates.add(i);
+            arr[i] = arr[i - 1] * i;
+        }
+
+        k--;
+        for (int j = n - 1; j >= 0; j--) {
+            int index = k / arr[j];
+            k -= arr[j] * index;
+            sb.append(candidates.remove(index));
+        }
+
+        return sb.toString();
     }
 }
 ```
