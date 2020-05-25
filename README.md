@@ -1323,3 +1323,33 @@ class Solution {
 }
 ```
 
+
+
+## 颜色分类
+
+三指针。
+
+```java
+class Solution {
+    public void sortColors(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        int p1 = 0, cur = 0, p2 = nums.length - 1;
+        while (cur <= p2) { //边界，nums全为1的情况
+            if (nums[cur] == 0) {
+                int tmp = nums[p1];
+                nums[p1++] = 0;
+                nums[cur++] = tmp; //cur++
+            } else if (nums[cur] == 2) {
+                int tmp = nums[p2];
+                nums[p2--] = 2;
+                nums[cur] = tmp; //nums[cur]可能为2，不自增
+            } else {
+                cur++;
+            }
+        }
+    }
+}
+```
+
