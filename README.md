@@ -1353,3 +1353,38 @@ class Solution {
 }
 ```
 
+## 组合
+
+给定两个整数 *n* 和 *k*，返回 1 ... *n* 中所有可能的 *k* 个数的组合。回溯。剪枝优化。
+
+![image-20200526090917688](./img/image-20200526090917688.png)
+
+```java
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (n <= 0 || k <= 0 || n < k) {
+            return res;
+        }
+        Stack<Integer> stack = new Stack<>();
+        combineHelper(res, stack, 1, n, k);
+        return res;
+    }
+
+    public void combineHelper(List<List<Integer>> res, Stack<Integer> stack, int index,int n, int k) {
+        if (stack.size() == k) {
+            res.add(new ArrayList<>(stack));
+            return;
+        }
+        // i 的极限值满足： n - i + 1 = (k - pre.size())。
+        // 【关键】n - i + 1 是闭区间 [i,n] 的长度。
+        // k - pre.size() 是剩下还要寻找的数的个数。
+        for (int i = index; i <= n - (k - stack.size()) + 1; i++) {
+            stack.push(i);
+            combineHelper(res, stack, i + 1, n, k);
+            stack.pop();
+        }
+    }
+}
+```
+
