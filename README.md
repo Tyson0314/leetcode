@@ -1388,3 +1388,35 @@ class Solution {
 }
 ```
 
+
+
+## 子集
+
+回溯。
+
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            res.add(new ArrayList<>()); //空集
+            return res;
+        }
+        Stack<Integer> queue = new Stack<>();
+        subsetsHelper(res, queue, 0, nums);
+
+        return res;
+    }
+
+    public void subsetsHelper(List<List<Integer>> res, Stack<Integer> queue, int index, int[] nums) {
+        res.add(new ArrayList<>(queue));
+        
+        for (int i = index; i < nums.length; i++) {
+            queue.push(nums[i]);
+            subsetsHelper(res, queue, i + 1, nums);
+            queue.pop();
+        }
+    }
+}
+```
+
