@@ -24,3 +24,16 @@ FROM Weather a, Weather b
 WHERE a.Temperature < b.Temperature and DATEDIFF(a.RecordDate, b.RecordDate) = -1
 ```
 
+
+
+## 球队的得分
+
+```mysql
+SELECT game.mdate,
+  team1, SUM(CASE WHEN goal.teamid = team1 THEN 1 ELSE 0 END) score1,
+  team2, SUM(CASE WHEN goal.teamid = team2 THEN 1 ELSE 0 END) score2
+FROM game LEFT OUTER JOIN goal #LEFT OUTER JOIN 可能双方都没得分
+ON game.id = goal.matchid
+GROUP BY game.mdate, game.team1, game.team2
+```
+

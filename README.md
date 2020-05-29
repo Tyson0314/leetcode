@@ -1420,3 +1420,81 @@ class Solution {
 }
 ```
 
+
+
+## 单词搜索
+
+注意避免同一元素多次使用（[A B C]，A->B->A）。
+
+```java
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board[0].length; j++) {
+                if (existHelper(board, i, j, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean existHelper(char[][] board, int row, int col, String word, int index) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(index)) {
+            return false;
+        }
+        if (board[row][col] == word.charAt(index)) {
+            index++;
+        }
+        char tmp = board[row][col];
+        board[row][col] = '#'; //防止回溯自身
+        boolean result = existHelper(board, row - 1, col, word, index) ||
+                existHelper(board, row + 1, col, word, index) || 
+                existHelper(board, row, col - 1, word, index) ||
+                existHelper(board, row, col + 1, word, index);
+        board[row][col] = tmp;
+        return result;
+    }
+}
+```
+
+
+
+## 删除排序数组的重复项
+
+每个元素最多出现两次，返回移除后数组的新长度。双指针。
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int left = 0;
+        int right = 1;
+        int count = 1;
+
+        while (right < nums.length) {
+            if (nums[right] == nums[left]) {
+                if (count < 2) {
+                    nums[++left] = nums[right++];
+                } else {
+                    right++;
+                }
+                count++;
+            } else {
+                count = 1;
+                nums[++left] = nums[right++];
+            }
+        }
+        return left + 1;
+    }
+}
+```
+
