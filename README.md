@@ -1543,3 +1543,65 @@ class Solution {
 }
 ```
 
+
+
+## 删除排序链表的重复元素
+
+```java
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode pre = head, cur = head.next;
+        while (cur != null) {
+            if (cur.val == pre.val) {
+                cur = cur.next;
+                continue;
+            }
+            pre.next = cur;
+            cur = cur.next;
+            pre = pre.next;
+        }
+
+        pre.next = null; //末尾相同元素，断开尾巴 [1,1,2,3,3]
+
+        return head;
+    }
+}
+```
+
+
+
+## 分隔链表
+
+哑节点；断尾，避免环形链表。
+
+```java
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode left = new ListNode(0); //哑节点
+        ListNode right = new ListNode(0);
+        ListNode leftTmp = left, rightTmp = right;
+        while (head != null) {
+            if (head.val < x) {
+                leftTmp.next = head;
+                leftTmp = leftTmp.next;
+            } else {
+                rightTmp.next = head;
+                rightTmp = rightTmp.next;
+            }
+            head = head.next;
+        }
+        rightTmp.next = null; //断开尾巴，防止链表成环
+        leftTmp.next = right.next;
+        return left.next;
+    }
+}
+```
+
