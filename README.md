@@ -1628,3 +1628,30 @@ class Solution {
 }
 ```
 
+
+
+## 不同的二叉搜索树
+
+给定一个整数 *n*，求以 1 ... *n* 为节点组成的二叉搜索树有多少种？
+
+[动态规划解法](https://leetcode-cn.com/problems/unique-binary-search-trees/solution/bu-tong-de-er-cha-sou-suo-shu-by-leetcode/)
+
+```java
+class Solution {
+    public int numTrees(int n) {
+        int arr[] = new int[n + 1];
+        arr[0] = 1;
+        arr[1] = 1;
+        int sum = 0;
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                arr[i] += arr[j - 1] * arr[i - j];
+            }
+        }
+
+        return arr[n];
+    }
+}
+```
+
