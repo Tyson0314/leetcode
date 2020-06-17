@@ -1655,3 +1655,67 @@ class Solution {
 }
 ```
 
+## 子集II
+
+给定一个可能包含重复元素的整数数组 ***nums***，返回该数组所有可能的子集（幂集）。
+
+```java
+class Solution {
+    private List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        Stack<Integer> subset = new Stack<>();
+        subsetsWithDupHelper(nums, 0, subset);
+        return res;
+    }
+
+    private void subsetsWithDupHelper(int[] nums, int index, Stack<Integer> subset) {
+        res.add(new ArrayList<>(subset));
+        if (index >= nums.length) {
+            return;
+        }
+        for (int i = index; i < nums.length; i++) {
+            if (i > index && nums[i] == nums[i - 1]) { //i > index
+                continue;
+            }
+            subset.push(nums[i]);
+            subsetsWithDupHelper(nums, i + 1, subset);
+            subset.pop();
+        }
+    }
+}
+```
+
+## 解码方法
+
+https://leetcode-cn.com/problems/decode-ways/
+
+```java
+class Solution {
+    public int numDecodings(String s) {
+        char[] arr = s.toCharArray();
+        if (arr[0] == '0') {
+            return 0;
+        }
+
+        int cur = 1;
+        int pre = 1;
+        for (int i = 1; i < arr.length; i++) {
+            int tmp = cur;
+            if (arr[i] == '0') {
+                if (arr[i - 1] == '1' || arr[i - 1] == '2') {
+                    cur = pre;
+                } else {
+                    return 0;
+                }
+            } else if (arr[i - 1] == '1' || (arr[i - 1] == '2' && arr[i] >= '0' && arr[i] <= '6')) {
+                cur += pre;
+            }
+            pre = tmp;
+        }
+
+        return cur;
+    }
+}
+```
+
