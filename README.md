@@ -1749,3 +1749,39 @@ class Solution {
 
 
 
+## 复原ip
+
+```java
+class Solution {
+    List<String> res = new ArrayList<>();
+    public List<String> restoreIpAddresses(String s) {
+        dfs(s, 0, 0, new StringBuilder());
+        return res;
+    }
+
+    private void dfs(String s, int start, int ipIndex, StringBuilder sb) {
+        if (ipIndex == 4) {
+            if (start == s.length()) {
+                res.add(sb.substring(0, sb.length() - 1).toString());
+            }
+            return; //长度为4则返回
+        }
+        for (int i = start; i < start + 3 && i < s.length(); i++) {
+            String subStr = s.substring(start, i + 1);
+            int num = Integer.parseInt(subStr);
+            if (num > 255) {
+                return;
+            }
+            sb.append(subStr).append(".");
+            dfs(s, i + 1, ipIndex + 1, sb);
+            sb.delete(sb.length() - (i - start + 2), sb.length());
+            if(s.charAt(start) == '0') { //允许0.0.0.0，其他以0开头的剪枝
+                return;
+            }
+        }
+    }
+}
+```
+
+
+
