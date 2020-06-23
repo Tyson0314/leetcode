@@ -1807,3 +1807,55 @@ class Solution {
 }
 ```
 
+
+
+## 二叉树锯齿形层次遍历
+
+使用两个栈实现。
+
+```java
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        s1.push(root);
+        boolean reverse = false;
+
+        while (!s1.isEmpty() || !s2.isEmpty()) {
+            List<Integer> list = new LinkedList<>();
+            TreeNode node;
+            if (!s1.isEmpty()) {
+                while (!s1.isEmpty()) {
+                    node = s1.pop();
+                    list.add(node.val);
+                    if (node.left != null) {
+                        s2.push(node.left);
+                    }
+                    if (node.right != null) {
+                        s2.push(node.right);
+                    }
+                }
+            } else {
+                while (!s2.isEmpty()) {
+                    node = s2.pop();
+                    list.add(node.val);
+                    if (node.right != null) {
+                        s1.push(node.right);
+                    }
+                    if (node.left != null) {
+                        s1.push(node.left);
+                    }
+                }
+            }
+            res.add(list);
+        }
+
+        return res;
+    }
+}
+```
+
