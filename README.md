@@ -1859,3 +1859,39 @@ class Solution {
 }
 ```
 
+
+
+## 从前序与中序遍历序列构造二叉树
+
+使用 map 存放下标。
+
+```java
+class Solution {
+    Map<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        
+        return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode buildTreeHelper(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
+        if (preorder == null || preorder.length == 0 || pStart > pEnd) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[pStart]);
+        int index = map.get(preorder[pStart]);
+        int leftNum = index - iStart;
+
+        root.left = buildTreeHelper(preorder, pStart + 1, pStart + leftNum, inorder, iStart, index - 1);
+        root.right = buildTreeHelper(preorder, pStart + leftNum + 1, pEnd, inorder, index + 1, iEnd);
+        return root;
+    }
+}
+```
+
