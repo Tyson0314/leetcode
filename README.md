@@ -1895,3 +1895,34 @@ class Solution {
 }
 ```
 
+
+
+## 将有序数组转换为二叉搜索树
+
+只返回一个可能的答案。
+
+```java
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null) {
+            return null;
+        }
+
+        return buildTree(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode buildTree(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+
+        int mid = (left + right) >> 1;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = buildTree(nums, left, mid - 1);
+        root.right = buildTree(nums, mid + 1, right);
+
+        return root;
+    }
+}
+```
+
