@@ -1926,3 +1926,48 @@ class Solution {
 }
 ```
 
+
+
+## 有序链表转换二叉搜索树
+
+快慢指针。
+
+```java
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode mid = locateMidNode(head);
+        TreeNode root = new TreeNode(mid.val);
+        
+        if (mid == head) {
+            return root;
+        }
+
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(mid.next);
+
+        return root;
+    }
+
+    public ListNode locateMidNode(ListNode node) {
+        ListNode pre = null;
+        ListNode slow = node;
+        ListNode fast = node;
+
+        while (fast != null && fast.next != null) {
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        if (pre != null) {
+            pre.next = null;//从中点的前一个节点断开链表
+        }
+
+        return slow;
+    }
+}
+```
+
