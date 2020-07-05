@@ -2000,3 +2000,96 @@ class Solution {
 }
 ```
 
+
+
+## 二叉树的最小深度
+
+注意当左子树或者右子树不存在的情况，如[1, 2]。
+
+```java
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return (root.left == null || root.right == null) ? left + right + 1 : Math.min(left, right) + 1; //[1, 2]
+    }
+}
+```
+
+
+
+## 二叉树展开为链表
+
+```java
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+
+//找到 1 的左子树2的最右节点a，1 的右子树作为a的右子树
+    1
+   /
+  2        
+ / \        
+3   4    
+     \
+       5
+        \
+         6
+//左子树变右子树
+    1
+     \
+      2          
+     / \          
+    3   4  
+         \
+          5
+           \
+            6
+            
+ //找到3的最右节点，2的右子树变成3的右子树
+    1
+     \
+      2          
+     /       
+    3 
+      \
+        4  
+         \
+          5
+           \
+            6  
+//2的左子树变成2的右子树
+```
+
+[参考题解](https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--26/)
+
+```java
+class Solution {
+    public void flatten(TreeNode root) {
+        while (root != null) {
+            if (root.left == null) {
+                root = root.right;
+            } else {
+                TreeNode tmp = root.left;
+                while (tmp.right != null) {
+                    tmp = tmp.right;
+                }
+                tmp.right = root.right;
+                root.right = root.left;
+                root.left = null;
+                root = root.right;
+            }
+        }
+    }
+}
+```
+
+
+
+
+
