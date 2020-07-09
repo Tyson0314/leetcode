@@ -60,7 +60,13 @@ class Solution {
 
 
 
-## 字符串反转整数
+## 字符串转换整数
+
+```
+"4193 with words" 4193
+"   -42" -42
+"words and 987" 0
+```
 
 注意边界，空格，int 32位最大值最小值。
 
@@ -2090,6 +2096,31 @@ class Solution {
 ```
 
 
+
+## 杨辉三角II
+
+给定一个非负索引 *k*，其中 *k* ≤ 33，返回杨辉三角的第 *k* 行，k 从0开始。
+
+![image-20200709093301109](./img/yanghui-triangle.png)
+
+```java
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> res = new ArrayList<>();
+        res.add(1);
+        int pre = 1;
+        for (int i = 1; i <= rowIndex; i++) {
+            for (int j = 1; j < i; j++) {
+                int tmp = res.get(j);
+                res.set(j, tmp + pre);
+                pre = tmp;
+            }
+            res.add(1);
+        }
+        return res;
+    }
+}
+```
 
 
 
