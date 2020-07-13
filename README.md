@@ -2157,3 +2157,63 @@ class Solution {
 
 
 
+## 买卖股票的最佳时机
+
+动态规划 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+            maxProfit = Math.max(prices[i] - minPrice, maxProfit);
+        }
+        return maxProfit;
+    }
+}
+```
+
+
+
+## 验证回文串
+
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。输入"A man, a plan, a canal: Panama"，输出 true。
+
+```java
+class Solution {
+    public boolean isPalindrome(String s) {
+        if (s == null || s.length() == 0) {
+            return true;
+        }
+        s = s.toLowerCase();//toLowerCase()
+        int left = 0;
+        int right = s.length() - 1;
+        while (left < right) {
+            while (left < s.length() && !isValidChar(s.charAt(left))) {
+                left++;
+            }
+            while (right > 0 && !isValidChar(s.charAt(right))) {
+                right--;
+            }
+            if (left < right && s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;//warn
+            right--;//warn
+        }
+        return true;
+    }
+
+    private boolean isValidChar(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
+    }
+    
+}
+```
+
+
+
