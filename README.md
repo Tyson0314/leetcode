@@ -303,7 +303,7 @@ class Solution {
 
 ## 删除链表倒数第n个节点
 
-使用快慢指针，快指针先走n步。
+使用快慢指针，快指针先走n步。给定的 *n* 保证是有效的。
 
 ```java
 class Solution {
