@@ -2277,3 +2277,193 @@ class Solution {
 
 
 
+## 单词接龙
+
+```
+输入:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+输出: 5  一个最短转换序列是 "hit" -> "hot" -> "dot" -> "dog" -> "cog",返回它的长度 5。
+```
+
+已知目标顶点的情况下，可以分别从起点和目标顶点（终点）执行广度优先遍历，直到遍历的部分有交集。这种方式搜索的单词数量会更小一些。
+
+判断当前单词可以转换成哪些候选单词（未访问的单词），有两种思路：
+
+1、遍历所有候选单词，判断当前单词是否可以转换成这个候选单词。
+
+2、因为单词是由a~z这有限数量的字符组成的，可以遍历当前单词能转换成的所有单词，判断其是否包含在候选单词中。候选单词用HashSet保存，可以大大提高判断包含关系的性能。
+
+当单词总数量庞大的时候，之前代码用到的思路1耗时就会很长。而当单词的字符串数量、单词长度很大时，思路2耗时就会更长。实际情况下，一般单词不会很长，字符也是固定的26个小写字母，因此思路2的性能会好很多。
+
+**假如单词有10个字母，候选单词有500个。思路1需要10*500=5000次比较；思路2只需要26\*10=260次比较。**
+
+采用思路2的话，则双向BFS可以从节点更少的一端遍历，优化性能。假如beginWord有5个单词，endWords有10个单词，则从beginWords端进行遍历，需要5\*26*10次比较；从endWords端进行遍历的话，需要10\*26\*10次比较。
+
+```java
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        if (wordSet.size() == 0 || !wordSet.contains(endWord)) {
+            return 0;
+        }
+        
+        int step = 1;
+        Set<String> beginWords = new HashSet<>();
+        beginWords.add(beginWord);
+        Set<String> endWords = new HashSet<>();
+        endWords.add(endWord);
+        Set<String> visited = new HashSet<>();
+        visited.addAll(beginWords);
+        visited.addAll(endWords);
+
+        while (!beginWords.isEmpty() && !endWords.isEmpty()) {
+            if (beginWords.size() > endWords.size()) {
+                Set<String> tmp = beginWords;
+                beginWords = endWords;
+                endWords = tmp;
+            }
+            Set<String> nextLevelSet = new HashSet<>();
+            for (String word : beginWords) {
+                if (oneLetterDiff(word, endWords, wordSet, visited, nextLevelSet)) {
+                    return step + 1;//需要加1
+                }
+            }
+            beginWords = nextLevelSet;//从nextLevelSet开始新的遍历
+            step++;
+        }
+
+        return 0;
+    }
+
+    private boolean oneLetterDiff(String word, Set<String> endWords, Set<String> wordSet, Set<String> visited, Set<String> nextLevelSet) {
+        char[] charArr = word.toCharArray();
+        for (int i = 0; i < word.length(); i++) {
+            char originChar = charArr[i];
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (originChar == c) {
+                    continue;
+                }
+                charArr[i] = c;
+                String newWord = String.valueOf(charArr);//api
+                if (wordSet.contains(newWord)) {
+                    if (endWords.contains(newWord)) {
+                        return true;
+                    }
+                    if (!visited.contains(newWord)) {
+                        nextLevelSet.add(newWord);
+                        visited.add(newWord);
+                    }
+                }
+            }
+            //回溯
+            charArr[i] = originChar;
+        }
+
+        return false;
+    }
+}
+```
+
+
+
+## 分割回文串
+
+```
+输入: "aab"
+输出:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+```
+
+[参考](https://leetcode-cn.com/problems/palindrome-partitioning/solution/hui-su-you-hua-jia-liao-dong-tai-gui-hua-by-liweiw/)
+
+使用动态规划预标记出哪一段属于回文串。
+
+```java
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        
+        int len = s.length();
+        if (s == null || len == 0) {
+            return res;
+        }
+
+        boolean dp[][] = new boolean[len][len];
+        char[] charArr = s.toCharArray();
+
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+
+        for (int right = 1; right < len; right++) {
+            for (int left = 0; left < right; left++) {
+                    dp[left][right] = charArr[left] == charArr[right] && (right - left <= 2 || dp[left + 1][right - 1]);
+            }
+        }
+
+        LinkedList<String> path = new LinkedList<>();
+        dfs(s, 0, res, path, dp);
+
+        return res;
+    }
+
+    private void dfs(String s, int start, List<List<String>> res, LinkedList<String> path, boolean[][] dp) {
+        if (start == s.length()) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++) {
+            if (dp[start][i]) {
+                path.addLast(s.substring(start, i + 1));
+                dfs(s, i + 1, res, path, dp);
+                path.removeLast();
+            }
+        }
+    }
+}
+```
+
+
+
+## 求根到叶子节点数字之和
+
+```java
+//  输入: [1,2,3]
+//     1
+//    / \
+//   2   3
+// 输出: 25
+class Solution {
+    public int sumNumbers(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return sumNumbersHelper(root, 0);
+    }
+
+    private int sumNumbersHelper(TreeNode node, int sum) {
+        if (node == null) {
+            return 0;
+        }
+        if (sum > Integer.MAX_VALUE / 10 || (sum == Integer.MAX_VALUE / 10 && node.val > Integer.MAX_VALUE % 10)) {
+            throw new IllegalArgumentException("exceed max int value");
+        }
+        sum = sum * 10 + node.val;
+
+        if (node.left == null && node.right == null) {
+            return sum;
+        }
+
+        return sum = sumNumbersHelper(node.right, sum) + sumNumbersHelper(node.left, sum);
+    }
+}
+```
+
