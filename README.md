@@ -2467,3 +2467,64 @@ class Solution {
 }
 ```
 
+
+
+## 克隆图
+
+深度优先搜索。
+
+```java
+class Solution {
+    public Node cloneGraph(Node node) {
+        Map<Node, Node> lookup = new HashMap<>();
+        return dfs(node, lookup);
+    }
+
+    private Node dfs(Node node, Map<Node,Node> lookup) {
+        if (node == null) return null;
+        if (lookup.containsKey(node)) return lookup.get(node);
+        Node clone = new Node(node.val, new ArrayList<>());
+        lookup.put(node, clone);
+        for (Node n : node.neighbors)clone.neighbors.add(dfs(n,lookup));
+        return clone;
+    }
+}
+```
+
+广度优先搜索。遍历图的过程，未访问过的节点放入队列。
+
+```java
+class Solution {
+    public Node cloneGraph(Node node) {
+        return bfs(node, new HashMap<Node, Node>());
+    }
+
+    private Node bfs(Node root, HashMap<Node, Node> visitedMap) {
+        if (root == null) {
+            return root;
+        }
+
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.offer(root);
+        Node cloneNode = new Node(root.val, new ArrayList<>());
+        visitedMap.put(root, cloneNode);
+
+        while (queue.size() != 0) {
+            Node node = queue.poll();
+
+            for (Node n : node.neighbors) {
+                Node tmp = visitedMap.get(n);
+                if (tmp == null) {
+                    queue.offer(n); //未访问过的放入队列
+                    tmp = new Node(n.val, new ArrayList<>());
+                    visitedMap.put(n, tmp); //标记访问过
+                }
+                visitedMap.get(node).neighbors.add(tmp);
+            }
+        }
+
+        return visitedMap.get(root);
+    }
+}
+```
+
