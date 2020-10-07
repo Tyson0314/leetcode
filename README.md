@@ -2611,3 +2611,33 @@ class Solution {
 }
 ```
 
+
+
+## 环形链表
+
+快慢指针。快指针每次走两步，慢指针走一步，相当于慢指针不动，快指针每次走一步，如果是环形链表，则一定会相遇。
+
+```java
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+
+        ListNode quick = head;
+        ListNode slow = head;
+
+        while (quick != null && quick.next != null) {
+            slow = slow.next;
+            quick = quick.next.next;
+            
+            if (slow == quick) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+```
+
