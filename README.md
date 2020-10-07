@@ -2547,3 +2547,34 @@ class Solution {
 }
 ```
 
+
+
+## 复制带随机指针的链表
+
+方法1：回溯。在回溯的过程中记录已经访问过的节点，否则可能会进入死循环。
+
+```java
+class Solution {
+    Map<Node, Node> visitedMap = new HashMap<>();
+    public Node copyRandomList(Node head) {
+        if(head == null) {
+            return head;
+        }
+
+        if (visitedMap.get(head) != null) {
+            return visitedMap.get(head);
+        }
+
+        Node node = new Node(head.val);
+        visitedMap.put(head, node);
+        
+        node.next = copyRandomList(head.next);
+        node.random = copyRandomList(head.random);
+
+        return node;
+    }
+}
+```
+
+方法2：1、复制节点并插入当前节点后面；2、再设定好random指针；3、最后分离出原链表与副本链表
+如： 1->2->3->null => 1->1'->2->2'->3->3'->null ； 再分离出 1->2->3->null 与 1'->2'->3'->null
