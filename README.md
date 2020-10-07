@@ -2578,3 +2578,36 @@ class Solution {
 
 方法2：1、复制节点并插入当前节点后面；2、再设定好random指针；3、最后分离出原链表与副本链表
 如： 1->2->3->null => 1->1'->2->2'->3->3'->null ； 再分离出 1->2->3->null 与 1'->2'->3'->null
+
+
+
+## 单词拆分
+
+![image-20201007205706475](./img/word-break.png)
+
+```java
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int len = s.length(), maxw = 0;
+        //dp[i]表示前i个字母组成的字符串是否可以被拆分
+        boolean[] dp = new boolean[len + 1];
+        //状态转移方程初始化条件
+        dp[0] = true;
+        Set<String> set = new HashSet();
+        for(String str : wordDict){
+            set.add(str);
+            maxw = Math.max(maxw, str.length());
+        }
+        for(int i = 1; i < len + 1; i++){
+            for(int j = i; j >= 0 && j >= i - maxw; j--){
+                if(dp[j] && set.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[len];
+    }
+}
+```
+
