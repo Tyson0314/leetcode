@@ -2643,6 +2643,90 @@ public class Solution {
 
 
 
+## 环形链表II
+
+方法一：头结点到入环结点的距离为a，入环结点到相遇结点的距离为b，相遇结点到入环结点的距离为c。然后，当fast以slow的两倍速度前进并和slow相遇时，fast走过的距离是s的两倍，即有等式：a+b+c+b = 2(a+b) ，可以得出 a = c ，所以说，让fast和slow分别从相遇结点和头结点同时同步长出发，他们的相遇结点就是入环结点。
+
+```java
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (true) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                break;
+            }
+        }
+
+        fast = head;
+ 
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return fast;
+    }
+}
+```
+
+方法二：先算出环的大小n，快指针先走n步，然后快慢指针一起走，相遇的地方即是环的入口。
+
+```java
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head == null) {
+            return null;
+        }
+        //快慢指针找出环的大小
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if(slow == fast) {
+                break;
+            }
+        }
+        if(fast == null || fast.next == null) {
+            return null;
+        }
+        int sizeOfCycle = 0;
+        while(true) {
+            slow = slow.next;
+            sizeOfCycle++;
+            if(slow == fast) {
+                break;
+            }
+        }
+        //快慢指针重新从链表首部出发，快指针先走sizeOfCycle步
+        //然后两个指针同时一起走，步长为1，相遇节点即是环的入口
+        slow = head;
+        fast = head;
+        while(sizeOfCycle-->0) {
+            fast = fast.next;
+        }
+        while(true) {
+            if(fast == slow) {
+                return fast;
+            }
+            fast = fast.next;
+            slow = slow.next;
+        }
+    }
+}
+```
+
+
+
+
+
 ## 只出现一次的数字 II
 
 方法1：每个数想象成32位的二进制，对于每一位的二进制的1和0累加起来必然是3N或者3N+1， 为3N代表目标值在这一位没贡献，3N+1代表目标值在这一位有贡献(=1)，然后将所有有贡献的位|起来就是结果。这样做的好处是如果题目改成K个一样，只需要把代码改成cnt%k。
@@ -2682,6 +2766,56 @@ class Solution {
         }
         
         return nums[nums.length - 1];
+    }
+}
+```
+
+
+
+## 重排链表
+
+1、找到中间节点，从中间节点断开；2、翻转右边链表；；右边链表插入到左边链表的间隙
+
+```java
+class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode slow = head, fast = head;
+        //找到中间节点
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        ListNode reverse = slow.next;
+        slow.next = null; //从中间断开
+
+        ListNode pre = null;
+        ListNode cur = reverse;
+
+        //翻转链表
+        while (cur != null) {
+            ListNode tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+
+        ListNode l1 = head;
+        ListNode l2 = pre;
+
+        //l2插入l1间隙
+        while (l1 != null && l2 != null) {
+            ListNode tmp1 = l1.next;
+            ListNode tmp2 = l2.next;
+            l1.next = l2;
+            l2.next = tmp1;
+            l1 = tmp1;
+            l2 = tmp2;
+        }
     }
 }
 ```
