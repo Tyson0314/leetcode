@@ -2820,3 +2820,83 @@ class Solution {
 }
 ```
 
+
+
+## 对链表进行插入排序
+
+- 需要一个指针指向当前已排序的最后一个位置，这里用的是head指针
+- 需要另外一个指针pre,每次从表头循环，这里设置一个哑结点tmp。
+- 每次拿出未排序的节点，先和前驱比较，如果大于或者等于前驱，就不用排序了，直接进入下一次循环
+- 如果前驱小，则进入内层循环，依次和pre指针比较，插入对应位置即可。
+
+```java
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        ListNode tmp = new ListNode(0);
+        ListNode pre;
+        tmp.next = head;
+
+        while (head != null && head.next != null) {
+            if (head.val <= head.next.val) {
+                head = head.next;
+                continue;
+            }
+            pre = tmp;
+            while (pre.next.val < head.next.val) {
+                pre = pre.next;
+            }
+            ListNode cur = head.next;
+            head.next = cur.next;
+            cur.next = pre.next;
+            pre.next = cur;
+        }
+
+        return tmp.next;
+    }
+}
+```
+
+
+
+## 逆波兰表达式求值
+
+```
+输入: ["2", "1", "+", "3", "*"]
+输出: 9
+解释: 该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9
+```
+
+```java
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        Integer num1, num2;
+        for (int i = 0; i < tokens.length; i++) {
+            switch (tokens[i]) {
+                case "+":
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "-":
+                    num1 = stack.pop();
+                    num2 = stack.pop();
+                    stack.push(num2 - num1);
+                    break;
+                case "*":
+                    stack.push(stack.pop() * stack.pop());
+                    break;
+                case "/":
+                    num1 = stack.pop();
+                    num2 = stack.pop();
+                    stack.push(num2 / num1);
+                    break;
+                default:
+                    stack.push(Integer.valueOf(tokens[i]));
+                    break;
+            }
+        }
+
+        return stack.pop();
+    }
+}
+```
+
