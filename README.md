@@ -2900,3 +2900,59 @@ class Solution {
 }
 ```
 
+
+
+## 排序链表
+
+```
+输入: 4->2->1->3
+输出: 1->2->3->4
+```
+
+```java
+class Solution {
+    public ListNode sortList(ListNode head) {
+        return mergeSort(head);
+    }
+
+    public ListNode mergeSort(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode rHead = slow.next;
+        slow.next = null; //断开链表
+
+        ListNode l = mergeSort(head);
+        ListNode r = mergeSort(rHead);
+
+        return merge(l, r);
+    }
+
+    public ListNode merge(ListNode l, ListNode r) {
+        ListNode tmp = new ListNode(0);
+        ListNode cur = tmp;
+
+        while (l != null && r != null) {
+            if (l.val > r.val) {
+                cur.next = r;
+                r = r.next;
+            } else {
+                cur.next = l;
+                l = l.next;
+            }
+            cur = cur.next;
+        }
+
+        cur.next = l == null ? r : l;
+
+        return tmp.next;
+    }
+}
+```
+
