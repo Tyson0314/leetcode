@@ -3087,3 +3087,30 @@ class Solution {
 }
 ```
 
+
+
+## 乘积最大子数组
+
+动态规划。
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        int curMax = 1, curMin = 1;//保证i=1时，结果正确
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < 0) {
+                int tmp = curMax;
+                curMax = curMin;
+                curMin = tmp;
+            }
+            curMax = Math.max(curMax, curMax * nums[i]);
+            curMin = Math.min(curMin, curMin * nums[i]);
+
+            max = Math.max(max, curMax);//[2,-2]，当i=1时，curMax与curMin交换，curMax=1，max=2，故取max与curMax中最大值
+        }
+        return max;
+    }
+}
+```
+
