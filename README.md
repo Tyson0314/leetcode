@@ -1858,6 +1858,32 @@ class Solution {
 
 
 
+## 反转链表
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode tmp = null;
+        while (cur != null) {
+            tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+
+        return pre;
+    }
+}
+```
+
+
+
 ## 反转链表II
 
 反转从位置 *m* 到 *n* 的链表。请使用一趟扫描完成反转。头插法。
