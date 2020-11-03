@@ -487,6 +487,7 @@ Integer.MIN_VALUE 转为正数会溢出，故将 dividend 和 divisor 都转化�
 
 ```java
 class Solution {
+    //dividend / divisor
     public int divide(int dividend, int divisor) {
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
@@ -539,7 +540,7 @@ class Solution {
 
 思路：
 
-1、找到a[i-1] < a[i]；
+1、从后往前找到a[i-1] < a[i]；
 
 2、找到a[j] > a[i - 1]> a[j - 1];
 
