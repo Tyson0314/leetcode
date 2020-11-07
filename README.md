@@ -868,7 +868,7 @@ class Solution {
 
 1、排序；2、同一层级相同元素剪枝。参考自：https://leetcode-cn.com/problems/permutations-ii/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liwe-2/
 
-![1587518213329](C:\Users\Tyson\AppData\Roaming\Typora\typora-user-images\1587518213329.png)
+![1587518213329](./img/permutations-ii.png)
 
 ```java
 class Solution {
@@ -957,6 +957,8 @@ class Solution {
 
 
 ## 字母异位词分组
+
+将字符串转化成字符数组并排序。
 
 ![1587655391555](.\img\1587655391555.png)
 
