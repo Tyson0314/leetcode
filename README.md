@@ -2339,6 +2339,32 @@ class Solution {
 
 
 
+## 买卖股票的最佳时机 II
+
+可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+```java
+//输入: [7,1,5,3,6,4]
+//输出: 7
+class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int tmp = prices[i] - prices[i - 1];
+            if (tmp > 0) {
+                profit += tmp;
+            }
+        }
+
+        return profit;
+    }
+}
+```
+
+
+
+
+
 ## 验证回文串
 
 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。输入"A man, a plan, a canal: Panama"，输出 true。
@@ -3064,12 +3090,11 @@ class Solution {
 
 ## 排序链表
 
-```
-输入: 4->2->1->3
-输出: 1->2->3->4
-```
+[排序链表快速排序](https://www.cnblogs.com/morethink/p/8452914.html)
 
 ```java
+//输入: 4->2->1->3
+//输出: 1->2->3->4
 class Solution {
     public ListNode sortList(ListNode head) {
         return mergeSort(head);
@@ -3114,6 +3139,43 @@ class Solution {
         return tmp.next;
     }
 }
+
+//链表头结点作为基准值key。使用两个指针p1和p2，这两个指针均往next方向移动，移动的过程中保持p1之前的key都小于选定的key，p1和p2之间的key都大于选定的key，那么当p2走到末尾时交换p1与key值便完成了一次切分。
+class Solution {
+    public ListNode sortList(ListNode head) {
+        return quickSort(head, null);
+    }
+
+    private ListNode quickSort(ListNode head, ListNode tail) {
+        if (head != tail) {
+            ListNode node = quickSortHelper(head, tail);
+            quickSort(head, node);
+            quickSort(node.next, tail);
+        }
+        return head;
+    }
+
+    private ListNode quickSortHelper(ListNode head, ListNode tail) {
+        ListNode p1 = head, p2 = head.next;
+        while (p2 != tail) {
+            if (p2.val < head.val) {
+                p1 = p1.next;
+                int tmp = p1.val;
+                p1.val = p2.val;
+                p2.val = tmp;
+            }
+            p2 = p2.next;
+        }
+
+        if (p1 != head) {
+            int tmp = p1.val;
+            p1.val = head.val;
+            head.val = tmp;
+        }
+
+        return p1;
+    }
+}
 ```
 
 
@@ -3139,6 +3201,146 @@ class Solution {
             max = Math.max(max, curMax);//[2,-2]，当i=1时，curMax与curMin交换，curMax=1，max=2，故取max与curMax中最大值
         }
         return max;
+    }
+}
+```
+
+
+
+## 最长回文子串
+
+[动态规划](https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/)
+
+1. 定义状态。`dp[i][j]` 表示子串 `s[i..j]` 是否为回文子串
+
+2. 状态转移方程：`dp[i][j] = (s[i] == s[j]) and dp[i + 1][j - 1]`
+3. 初始化的时候，单个字符一定是回文串，因此把对角线先初始化为 `true`，即 `dp[i][i] = true` 。
+4. 只要一得到 `dp[i][j] = true`，就记录子串的长度和起始位置
+
+注意事项：总是先得到小子串的回文判定，然后大子串才能参考小子串的判断结果，即填表顺序很重要。
+
+![image-20201115230411764](./img/image-20201115230411764.png)
+
+时间复杂度O(N2)，空间复杂度O(N2)，因为使用了二维数组。
+
+```java
+public class Solution {
+
+    public String longestPalindrome(String s) {
+        // 特判
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+
+        int maxLen = 1;
+        int begin = 0;
+
+        // dp[i][j] 表示 s[i, j] 是否是回文串
+        boolean[][] dp = new boolean[len][len];
+        char[] charArray = s.toCharArray();
+
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+        for (int j = 1; j < len; j++) {
+            for (int i = 0; i < j; i++) {
+                if (charArray[i] != charArray[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+
+                // 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文，此时记录回文长度和起始位置
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+    }
+}
+```
+
+
+
+## 最长上升子序列
+
+```
+输入: [10,9,2,5,3,7,101,18]
+输出: 4 
+解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
+```
+
+[动态规划](https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/)
+
+dp[i] 的值代表 `nums` 前 i 数字的最长子序列长度。
+
+时间复杂度O(N2)。
+
+```java
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) { //[]
+            return 0;
+        }
+        int len = nums.length;
+        //dp[i]:以i结尾的子序列的最大长度
+        int dp[] = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            dp[i] = 1;
+        }
+
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        int maxLen = 1;
+        for (int i = 1; i < len; i++) {
+            if (maxLen < dp[i]) {
+                maxLen = dp[i];
+            }
+        }
+
+        return maxLen;
+    }
+}
+```
+
+
+
+## 无重复字符的最长子串
+
+滑动窗口。
+
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        int maxLen = 0;
+        int left = 0;
+        for (int j = 0; j < s.length(); j++) { //i是左指针，j是右指针
+            if (map.containsKey(s.charAt(j))) {//!!子串中有相同的元素，左指针右移。类似tcp收到确认
+                left = Math.max(left, map.get(s.charAt(j)) + 1); //相同元素落在子串范围内，则更新左指针；不在子串范围则不更新。类似tcp：确认落在发送窗口内，则更新左指针；在发送窗口外则不更新
+            }
+            maxLen = Math.max(maxLen, j - left + 1);
+            map.put(s.charAt(j), j);
+        }
+        return maxLen;
     }
 }
 ```
