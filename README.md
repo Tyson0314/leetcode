@@ -3345,3 +3345,85 @@ class Solution {
 }
 ```
 
+
+
+## 二叉树的最近公共祖先
+
+[后序遍历思路](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
+
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        if (left != null && right != null) {
+            return root;
+        } else {
+            return left == null ? right : left;
+        }
+    }
+}
+```
+
+
+
+## 数组中的第K个最大元素
+
+利用快速排序，每次得到pivot的下标，与(arr.length-1)比较，相等则为所求元素。
+
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        int index = nums.length - k;
+
+        while (left < right) {
+            int pivot = partition(nums, left, right);
+            if (pivot == index) {
+                return nums[pivot];
+            } else if (index > pivot) {
+                left = pivot + 1;
+            } else {
+                right = pivot - 1;
+            }
+        }
+
+        return nums[left];
+    }
+
+    private int partition(int[] nums, int left, int right) {
+        int i = left, j = right;
+        int pivot = nums[left];
+
+        while (i < j) {
+            while (i < j && nums[j] >= pivot) {
+                j--;
+            }
+
+            while (i < j && nums[i] <= pivot) {
+                i++;
+            }
+
+            if (i < j) {
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+            } else {
+                break;
+            }
+        }
+
+        nums[left] = nums[j];
+        nums[j] = pivot;
+
+        return j;
+    }
+}
+```
+
