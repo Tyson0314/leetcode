@@ -1,4 +1,92 @@
-## leetcode
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [无重复字符的最长子串](#%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2)
+- [二叉树的最近公共祖先](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88)
+- [数组中的第K个最大元素](#%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACk%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0)
+- [整数反转](#%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC)
+- [字符串转换整数](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0)
+- [回文数](#%E5%9B%9E%E6%96%87%E6%95%B0)
+- [盛最多水的容器](#%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8)
+- [三数之和](#%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C)
+- [电话号码的组合](#%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E7%BB%84%E5%90%88)
+- [四数之和](#%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C)
+- [删除链表倒数第n个节点](#%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACn%E4%B8%AA%E8%8A%82%E7%82%B9)
+- [有效的括号](#%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7)
+- [括号生成](#%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90)
+- [两两交换链表中的节点](#%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9)
+- [合并两个有序列表](#%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8)
+- [删除排序数组的重复项](#%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9)
+- [两数相除](#%E4%B8%A4%E6%95%B0%E7%9B%B8%E9%99%A4)
+- [下一个排列](#%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97)
+- [在排序数组中查找第一个和最后一个位置](#%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE)
+- [组合总和](#%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C)
+- [移除元素](#%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0)
+- [字符串相乘](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98)
+- [有效的数独](#%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC)
+- [全排列](#%E5%85%A8%E6%8E%92%E5%88%97)
+- [全排列II](#%E5%85%A8%E6%8E%92%E5%88%97ii)
+- [实现 strStr()](#%E5%AE%9E%E7%8E%B0-strstr)
+- [字母异位词分组](#%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84)
+- [pow(x, n)](#powx-n)
+- [旋转图像](#%E6%97%8B%E8%BD%AC%E5%9B%BE%E5%83%8F)
+- [跳跃游戏](#%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F)
+- [螺旋矩阵](#%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5)
+- [合并区间](#%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4)
+- [螺旋矩阵II](#%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5ii)
+- [第 k 个排列](#%E7%AC%AC-k-%E4%B8%AA%E6%8E%92%E5%88%97)
+- [简化路径](#%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84)
+- [矩阵置零](#%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6)
+- [搜索二维矩阵](#%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5)
+- [颜色分类](#%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB)
+- [组合](#%E7%BB%84%E5%90%88)
+- [子集](#%E5%AD%90%E9%9B%86)
+- [单词搜索](#%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A2)
+- [删除排序数组的重复项](#%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9-1)
+- [搜索旋转排序数组II](#%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84ii)
+- [删除排序链表的重复元素](#%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0)
+- [分隔链表](#%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8)
+- [格雷编码](#%E6%A0%BC%E9%9B%B7%E7%BC%96%E7%A0%81)
+- [不同的二叉搜索树](#%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
+- [子集II](#%E5%AD%90%E9%9B%86ii)
+- [解码方法](#%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95)
+- [反转链表](#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8)
+- [反转链表II](#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8ii)
+- [复原ip](#%E5%A4%8D%E5%8E%9Fip)
+- [对称的二叉树](#%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91)
+- [二叉树锯齿形层次遍历](#%E4%BA%8C%E5%8F%89%E6%A0%91%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86)
+- [从前序与中序遍历序列构造二叉树](#%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91)
+- [将有序数组转换为二叉搜索树](#%E5%B0%86%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
+- [有序链表转换二叉搜索树](#%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8%E8%BD%AC%E6%8D%A2%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
+- [平衡二叉树](#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91)
+- [二叉树的最小深度](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6)
+- [二叉树展开为链表](#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B1%95%E5%BC%80%E4%B8%BA%E9%93%BE%E8%A1%A8)
+- [杨辉三角II](#%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92ii)
+- [三角形最小路径和](#%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C)
+- [买卖股票的最佳时机](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA)
+- [买卖股票的最佳时机 II](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii)
+- [验证回文串](#%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2)
+- [被围绕的区域](#%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F)
+- [单词接龙](#%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99)
+- [分割回文串](#%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2)
+- [求根到叶子节点数字之和](#%E6%B1%82%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C)
+- [克隆图](#%E5%85%8B%E9%9A%86%E5%9B%BE)
+- [只出现一次的数字](#%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97)
+- [复制带随机指针的链表](#%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8)
+- [单词拆分](#%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86)
+- [环形链表](#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8)
+- [环形链表II](#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8ii)
+- [只出现一次的数字 II](#%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97-ii)
+- [重排链表](#%E9%87%8D%E6%8E%92%E9%93%BE%E8%A1%A8)
+- [对链表进行插入排序](#%E5%AF%B9%E9%93%BE%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+- [逆波兰表达式求值](#%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC)
+- [排序链表](#%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8)
+- [乘积最大子数组](#%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84)
+- [最长回文子串](#%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2)
+- [最长上升子序列](#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 | 题目                                                         | 题解                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -8,6 +96,136 @@
 | [版本比较](https://leetcode-cn.com/problems/compare-version-numbers/) | [CompareVersion](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/CompareVersion.java) |
 | [最大数](https://leetcode-cn.com/problems/largest-number/)   | [LargestNumber](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/LargestNumber.java) |
 | [最大正方形](https://leetcode-cn.com/problems/maximal-square/) | [MaximalSquare](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/MaximalSquare.java) |
+
+
+
+## 无重复字符的最长子串
+
+滑动窗口。
+
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        int maxLen = 0;
+        int left = 0;
+        for (int j = 0; j < s.length(); j++) { //i是左指针，j是右指针
+            if (map.containsKey(s.charAt(j))) {//!!子串中有相同的元素，左指针右移。类似tcp收到确认
+                left = Math.max(left, map.get(s.charAt(j)) + 1); //相同元素落在子串范围内，则更新左指针；不在子串范围则不更新。类似tcp：确认落在发送窗口内，则更新左指针；在发送窗口外则不更新
+            }
+            maxLen = Math.max(maxLen, j - left + 1);
+            map.put(s.charAt(j), j);
+        }
+        return maxLen;
+    }
+}
+```
+
+
+
+## 二叉树的最近公共祖先
+
+[后序遍历思路](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
+
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        if (left != null && right != null) {
+            return root;
+        } else {
+            return left == null ? right : left;
+        }
+    }
+}
+```
+
+
+
+## 数组中的第K个最大元素
+
+利用快速排序，每次得到pivot的下标，与(arr.length-1)比较，相等则为所求元素。
+
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        int index = nums.length - k;
+
+        while (left < right) {
+            int pivot = partition(nums, left, right);
+            if (pivot == index) {
+                return nums[pivot];
+            } else if (index > pivot) {
+                left = pivot + 1;
+            } else {
+                right = pivot - 1;
+            }
+        }
+
+        return nums[left];
+    }
+
+    private int partition(int[] nums, int left, int right) {
+        int i = left, j = right;
+        median3(nums, left, right);
+        int pivot = nums[left];
+
+        while (i < j) {
+            while (i < j && nums[j] >= pivot) {
+                j--;
+            }
+
+            while (i < j && nums[i] <= pivot) {
+                i++;
+            }
+
+            if (i < j) {
+                swap(nums, i, j);
+            } else {
+                break;
+            }
+        }
+
+        nums[left] = nums[j];
+        nums[j] = pivot;
+
+        return j;
+    }
+
+    private void median3(int[] nums, int left, int right) {
+        int mid = (left + right) / 2;
+        if (nums[left] > nums[mid]) {
+            swap(nums, left, mid);
+        }
+        if (nums[left] > nums[right]) {
+            swap(nums, left, right);
+        }
+        if (nums[mid] > nums[right]) {
+            swap(nums, mid, right);
+        }
+
+        swap(nums, left, mid);
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
+```
 
 
 
@@ -3317,113 +3535,4 @@ class Solution {
 }
 ```
 
-
-
-## 无重复字符的最长子串
-
-滑动窗口。
-
-```java
-class Solution {
-    public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-
-        HashMap<Character, Integer> map = new HashMap<>();
-        int maxLen = 0;
-        int left = 0;
-        for (int j = 0; j < s.length(); j++) { //i是左指针，j是右指针
-            if (map.containsKey(s.charAt(j))) {//!!子串中有相同的元素，左指针右移。类似tcp收到确认
-                left = Math.max(left, map.get(s.charAt(j)) + 1); //相同元素落在子串范围内，则更新左指针；不在子串范围则不更新。类似tcp：确认落在发送窗口内，则更新左指针；在发送窗口外则不更新
-            }
-            maxLen = Math.max(maxLen, j - left + 1);
-            map.put(s.charAt(j), j);
-        }
-        return maxLen;
-    }
-}
-```
-
-
-
-## 二叉树的最近公共祖先
-
-[后序遍历思路](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
-
-```java
-class Solution {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
-            return root;
-        }
-
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-
-        if (left != null && right != null) {
-            return root;
-        } else {
-            return left == null ? right : left;
-        }
-    }
-}
-```
-
-
-
-## 数组中的第K个最大元素
-
-利用快速排序，每次得到pivot的下标，与(arr.length-1)比较，相等则为所求元素。
-
-```java
-class Solution {
-    public int findKthLargest(int[] nums, int k) {
-        int left = 0;
-        int right = nums.length - 1;
-        int index = nums.length - k;
-
-        while (left < right) {
-            int pivot = partition(nums, left, right);
-            if (pivot == index) {
-                return nums[pivot];
-            } else if (index > pivot) {
-                left = pivot + 1;
-            } else {
-                right = pivot - 1;
-            }
-        }
-
-        return nums[left];
-    }
-
-    private int partition(int[] nums, int left, int right) {
-        int i = left, j = right;
-        int pivot = nums[left];
-
-        while (i < j) {
-            while (i < j && nums[j] >= pivot) {
-                j--;
-            }
-
-            while (i < j && nums[i] <= pivot) {
-                i++;
-            }
-
-            if (i < j) {
-                int tmp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = tmp;
-            } else {
-                break;
-            }
-        }
-
-        nums[left] = nums[j];
-        nums[j] = pivot;
-
-        return j;
-    }
-}
-```
 

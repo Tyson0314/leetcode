@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [上升的温度](#%E4%B8%8A%E5%8D%87%E7%9A%84%E6%B8%A9%E5%BA%A6)
+- [球队的得分](#%E7%90%83%E9%98%9F%E7%9A%84%E5%BE%97%E5%88%86)
+- [查询所有门课程都不小于90分的学生](#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E9%97%A8%E8%AF%BE%E7%A8%8B%E9%83%BD%E4%B8%8D%E5%B0%8F%E4%BA%8E90%E5%88%86%E7%9A%84%E5%AD%A6%E7%94%9F)
+- [观看视频数量前三名](#%E8%A7%82%E7%9C%8B%E8%A7%86%E9%A2%91%E6%95%B0%E9%87%8F%E5%89%8D%E4%B8%89%E5%90%8D)
+- [语文合格数学不合格](#%E8%AF%AD%E6%96%87%E5%90%88%E6%A0%BC%E6%95%B0%E5%AD%A6%E4%B8%8D%E5%90%88%E6%A0%BC)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 上升的温度
 
 找出所有当天温度比前一天高的日期的id。
