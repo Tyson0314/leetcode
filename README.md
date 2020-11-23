@@ -229,6 +229,127 @@ class Solution {
 
 
 
+## 岛屿的数量
+
+深度优先遍历，使用isVisited数组记录元素是否被访问过。
+
+```java
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+
+        boolean[][] isVisited = new boolean[grid.length][grid[0].length];
+        int count = 0;
+        
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1' && !isVisited[i][j]) {
+                    dfs(grid, isVisited, i, j);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    private void dfs(char[][] grid, boolean[][] isVisited, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
+            return;
+        }
+        if (!isVisited[i][j]) {
+            isVisited[i][j] = true;
+            dfs(grid, isVisited, i + 1, j);
+            dfs(grid, isVisited, i - 1, j);
+            dfs(grid, isVisited, i, j + 1);
+            dfs(grid, isVisited, i, j - 1);
+        }
+    }
+}
+```
+
+
+
+## 相交链表
+
+解法一：两个指针a和b，a指向headA，b指向headB，两个指针同时出发。假如a先走到尽头，则a重新指向headB。然后b走到尽头，b重新指向headA。如果是相交链表，则a和b会相遇，否则a/b最终会指向null。
+
+解法二：算出headA和headB的长度lenA、lenB，假如lenA较大，则先让headA走(lenA - lenB)步，然后headA和headB同时走，最终两者会相遇或者都指向null。
+
+```java
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+
+        while (a != b) {
+            a = a == null ? headB : a.next;
+            b = b == null ? headA : b.next;
+        }
+
+        return a;
+    }
+}
+```
+
+
+
+## 反转链表
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode tmp = null;
+        while (cur != null) {
+            tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+
+        return pre;
+    }
+}
+```
+
+
+
+## 反转链表II
+
+反转从位置 *m* 到 *n* 的链表。请使用一趟扫描完成反转。头插法。
+
+```java
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 1; i < m; i++) {
+            pre = pre.next;
+        }
+        head = pre.next;
+        for (int i = m; i < n; i++) {
+            ListNode cur = head.next;
+            head.next = cur.next;
+            cur.next = pre.next;
+            pre.next = cur;
+        }
+
+        return dummy.next;
+    }
+}
+```
+
+
+
 ## 整数反转
 
 注意 int32 位溢出、正负号问题。
@@ -2073,60 +2194,6 @@ class Solution {
         }
 
         return cur;
-    }
-}
-```
-
-
-
-## 反转链表
-
-```java
-class Solution {
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-
-        ListNode pre = null;
-        ListNode cur = head;
-        ListNode tmp = null;
-        while (cur != null) {
-            tmp = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = tmp;
-        }
-
-        return pre;
-    }
-}
-```
-
-
-
-## 反转链表II
-
-反转从位置 *m* 到 *n* 的链表。请使用一趟扫描完成反转。头插法。
-
-```java
-class Solution {
-    public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode pre = dummy;
-        for (int i = 1; i < m; i++) {
-            pre = pre.next;
-        }
-        head = pre.next;
-        for (int i = m; i < n; i++) {
-            ListNode cur = head.next;
-            head.next = cur.next;
-            cur.next = pre.next;
-            pre.next = cur;
-        }
-
-        return dummy.next;
     }
 }
 ```
