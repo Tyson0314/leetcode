@@ -400,6 +400,46 @@ class Solution {
 
 
 
+## 二叉树的右视图
+
+层序遍历，保存最右边树节点。
+
+```java
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) { //先取size的值，再自减
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                if (size == 0) { //最右边的节点
+                    res.add(node.val);
+                }
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+
+
+
+
 
 
 ## 整数反转
