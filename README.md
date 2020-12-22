@@ -520,6 +520,36 @@ class Solution {
 
 
 
+## 最大子序列和
+
+动态规划。dp[i+1]取决于dp[i]的值，不需要使用数组保存状态，只需要一个变量sum来保存上一个状态。
+
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int max = nums[0];
+        int sum = 0;
+
+        for (int num : nums) {
+            if (sum > 0) {
+                sum += num;
+            } else {
+                sum = num;
+            }
+            max = Math.max(max, sum);
+        }
+
+        return max;
+    }
+}
+```
+
+
+
 ## 字符串转换整数
 
 ```
