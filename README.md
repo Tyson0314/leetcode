@@ -550,6 +550,38 @@ class Solution {
 
 
 
+## 验证二叉搜索树
+
+利用中序遍历。
+
+```java
+class Solution {
+    long pre = Long.MIN_VALUE; //最左节点为Integer.MIN_VALUE
+
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }    
+
+        if (!isValidBST(root.left)) {
+            return false;
+        }
+
+        if (pre >= root.val) {
+            return false;
+        }
+
+        pre = root.val; //更新pre
+
+        return isValidBST(root.right);
+    }
+}
+```
+
+
+
+
+
 ## 字符串转换整数
 
 ```
