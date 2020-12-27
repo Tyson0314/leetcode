@@ -580,9 +580,24 @@ class Solution {
 
 
 
+## 二叉树的最大深度
+
+```java
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+}
+```
 
 
-## 字符串转换整数
+
+
+
+## 字符串转换整数*
 
 ```
 "4193 with words" 4193
