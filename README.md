@@ -595,6 +595,43 @@ class Solution {
 
 
 
+## 回文链表
+
+```java
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        //找到中间节点
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        //链表后半部分反转
+        ListNode pre = null;
+        ListNode cur = slow;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        while (pre != null && head != null) {
+            if (pre.val != head.val) {
+                return false;
+            }
+            pre = pre.next;
+            head = head.next;
+        }
+
+        return true;
+    }
+}
+```
+
+
+
 
 
 ## 字符串转换整数*
