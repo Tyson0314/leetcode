@@ -632,6 +632,136 @@ class Solution {
 
 
 
+### LRU
+
+双链表+HashMap实现。get和put操作都是O(1)时间复杂度。
+
+```java
+class LRUCache {
+
+    DoubleList list;
+    int capacity;
+    Map<Integer, Node> map;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        list = new DoubleList();
+        map = new HashMap<>();
+    }
+
+    public int get(int key) {
+        Node node = map.get(key);
+        if (node == null) {
+            return -1;
+        }
+        list.remove(node);
+        list.addFirst(node);
+
+        return node.val;
+    }
+
+    public void put(int key, int val) {
+        Node node = map.get(key);
+        if (node == null) {
+            node = new Node(key, val);
+            if (map.size() >= capacity) {
+                Node last = list.removeLast();
+                map.remove(last.key);
+            }
+            list.addFirst(node);
+            map.put(key, node);
+        } else {
+            list.remove(node);
+            node.val = val;
+            list.addFirst(node);
+        }
+    }
+}
+
+class Node {
+    int key;
+    int val;
+    Node pre, next;
+
+    public Node(int key, int val) {
+        this.key = key;
+        this.val = val;
+    }
+}
+
+class DoubleList {
+    Node head, tail;
+
+    public DoubleList() {
+        head = new Node(0, 0);
+        tail = new Node(0, 0);
+        head.next = tail;
+        tail.pre = head;
+    }
+
+    public void remove(Node node) {
+        if (node == null) {
+            return;
+        }
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+    }
+
+    public Node removeLast() {
+        Node node = tail.pre;
+        
+        if (node != head) {
+            remove(node);
+            return node;
+        }
+        
+        return null;
+    }
+
+    public void addFirst(Node node) {
+        Node firstNode = head.next;
+        head.next = node;
+        node.pre = head;
+        node.next = firstNode;
+        firstNode.pre = node;
+    }
+}
+```
+
+如果 Node 结构中只存储 val，那么当链表长度超过阈值需要淘汰旧节点时，便无法知道对应的 key，从而无法删除 map 中的键，造成错误。
+
+```java
+if (map.size() >= capacity) {
+    Node last = list.removeLast();
+    map.remove(last.key);
+}
+```
+
+使用LinkedList不符合要求，因为remove(Object o)方法时间复杂度为O(N)，需要遍历链表找到对应的元素再删除。传入remove的节点o不一定是链表内部的节点，故需要遍历链表进行比较，找到相等的节点。
+
+```java
+    public boolean remove(Object o) {
+        if (o == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+```
+
+
+
 
 
 ## 字符串转换整数*
@@ -3782,7 +3912,7 @@ public class Solution {
                 }
             }
         }
-        return s.substring(begin, begin + maxLen);
+        return s.substring(begin, begin + maxLen); //substring(i, j)截取i到j(不包含j)的字符串
     }
 }
 ```
