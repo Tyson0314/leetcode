@@ -632,7 +632,7 @@ class Solution {
 
 
 
-### LRU
+## LRU
 
 双链表+HashMap实现。get和put操作都是O(1)时间复杂度。
 
@@ -762,6 +762,106 @@ if (map.size() >= capacity) {
 
 
 
+## 字符串相加
+
+```java
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder sb = new StringBuilder();
+        int tmp = 0;
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+        while (i >= 0 || j >= 0 || tmp > 0) {
+            int a = i >= 0 ? (num1.charAt(i--) - '0') : 0;
+            int b = j >= 0 ? (num2.charAt(j--) - '0') : 0;
+            int sum = a + b + tmp;
+            sb.append(sum % 10);
+            tmp = sum / 10;
+        }
+
+        return sb.reverse().toString(); //reverse()
+    }
+}
+```
+
+
+
+## 两数之和
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i])) {
+                result[0] = map.get(nums[i]);
+                result[1] = i;
+                return result;
+            }
+            map.put(target - nums[i], i);
+        }
+
+        return result;
+    }
+}
+```
+
+
+
+## 三数之和
+
+先排序。从左边开始，固定一个数 nums[i]，然后使用双指针（nums[i+1]和nums[right]）。
+
+注意去除重复三元组。
+
+![1586533893125](.\img\1586533893125.png)
+
+![1586534003083](.\img\1586534003083.png)
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) { //最左边的数字大于0，则sum不会等于0，退出
+                break;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) { //去重复
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    res.add(Arrays.asList(nums[i], nums[left], nums[right])); ///array to list
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    left++;
+                    right--;
+                } else if (sum > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+
+        return res;
+    }
+}
+```
+
 
 
 ## 字符串转换整数*
@@ -856,59 +956,6 @@ class Solution {
         }
         
         return maxArea;
-    }
-}
-```
-
-
-
-## 三数之和
-
-先排序，双指针。注意去除重复三元组。
-
-![1586533893125](.\img\1586533893125.png)
-
-![1586534003083](.\img\1586534003083.png)
-
-```java
-class Solution {
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length < 3) {
-            return res;
-        }
-        
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length - 2; i++) {
-            if (nums[i] > 0) {
-                return res;
-            }
-            if (i > 0 && nums[i] == nums[i - 1]) { //去重复
-                continue;
-            }
-            int left = i + 1;
-            int right = nums.length - 1;
-            while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
-                if (sum == 0) {
-                    res.add(Arrays.asList(nums[i], nums[left], nums[right]));
-                    while (left < right && nums[left] == nums[left + 1]) {
-                        left++;//去重复
-                    }
-                    while (right > left && nums[right] == nums[right - 1]) {
-                        right--;//去重复
-                    }
-                    left++;
-                    right--;
-                } else if (sum < 0) {
-                    left++;
-                } else {
-                    right--;
-                }
-            }
-        }
-
-        return res;
     }
 }
 ```
