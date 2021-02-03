@@ -864,6 +864,170 @@ class Solution {
 
 
 
+## 买卖股票的最佳时机
+
+动态规划 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+            maxProfit = Math.max(prices[i] - minPrice, maxProfit);
+        }
+        return maxProfit;
+    }
+}
+```
+
+
+
+## 买卖股票的最佳时机 II
+
+可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+```java
+//输入: [7,1,5,3,6,4]
+//输出: 7
+class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int tmp = prices[i] - prices[i - 1];
+            if (tmp > 0) {
+                profit += tmp;
+            }
+        }
+
+        return profit;
+    }
+}
+```
+
+
+
+## 二叉树锯齿形层次遍历
+
+使用两个栈实现。
+
+```java
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        //判空
+        if (root == null) {
+            return res;
+        }
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+
+        s1.push(root);
+
+        while (!s1.isEmpty() || !s2.isEmpty()) {
+            List<Integer> list = new ArrayList<>();
+            if (!s1.isEmpty()) {
+                while (!s1.isEmpty()) {
+                    TreeNode node = s1.pop();
+                    list.add(node.val);
+                    if (node.left != null) {
+                        s2.push(node.left);
+                    }
+                    if (node.right != null) {
+                        s2.push(node.right);
+                    }
+                }
+            } else {
+                while (!s2.isEmpty()) {
+                    TreeNode node = s2.pop();
+                    list.add(node.val);
+                    if (node.right != null) {
+                        s1.push(node.right);
+                    }
+                    if (node.left != null) {
+                        s1.push(node.left);
+                    }
+                }
+            }
+            res.add(list);
+        }
+
+        return res;
+    }
+}
+```
+
+
+
+## 接雨水
+
+动态规划，使用两个数组空间。leftMax[i] 代表第 `i` 列左边（不包含自身）最高的墙的高度，rightMax[i] 代表第 `i` 列右边最高的墙的高度。
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        int len = height.length;
+        int res = 0;
+        int[] leftMax = new int[len];
+        int[] rightMax = new int[len];
+
+        for (int i = 1; i < len; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
+        }
+        
+        for (int j = len - 2; j > 0; j--) {
+            rightMax[j] = Math.max(rightMax[j + 1], height[j + 1]);
+        }
+
+        for (int i = 1; i < len - 1; i++) {
+            int min = Math.min(leftMax[i], rightMax[i]);
+            if (min > height[i]) {
+                res += min - height[i];
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+[双指针法，只需要两个变量存储状态](https://leetcode-cn.com/problems/trapping-rain-water/solution/jie-yu-shui-by-leetcode/327718/)
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        int maxLeft = 0, maxRight = 0;
+        int left = 0;
+        int right = height.length - 1;
+        int res = 0;
+
+        while (left <= right) {
+            if (maxLeft < maxRight) {
+                if (height[left] < maxLeft) {
+                    res += (maxLeft - height[left]);
+                }
+                maxLeft = Math.max(maxLeft, height[left]);
+                left++;
+            } else {
+                if (height[right] < maxRight) {
+                    res += (maxRight - height[right]);
+                }
+                maxRight = Math.max(maxRight, height[right]);
+                right--;
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+
+
 ## 字符串转换整数*
 
 ```
@@ -2672,58 +2836,6 @@ class Solution {
 
 
 
-## 二叉树锯齿形层次遍历
-
-使用两个栈实现。
-
-```java
-class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (root == null) {
-            return res;
-        }
-        Stack<TreeNode> s1 = new Stack<>();
-        Stack<TreeNode> s2 = new Stack<>();
-        s1.push(root);
-        boolean reverse = false;
-
-        while (!s1.isEmpty() || !s2.isEmpty()) {
-            List<Integer> list = new LinkedList<>();
-            TreeNode node;
-            if (!s1.isEmpty()) {
-                while (!s1.isEmpty()) {
-                    node = s1.pop();
-                    list.add(node.val);
-                    if (node.left != null) {
-                        s2.push(node.left);
-                    }
-                    if (node.right != null) {
-                        s2.push(node.right);
-                    }
-                }
-            } else {
-                while (!s2.isEmpty()) {
-                    node = s2.pop();
-                    list.add(node.val);
-                    if (node.right != null) {
-                        s1.push(node.right);
-                    }
-                    if (node.left != null) {
-                        s1.push(node.left);
-                    }
-                }
-            }
-            res.add(list);
-        }
-
-        return res;
-    }
-}
-```
-
-
-
 ## 从前序与中序遍历序列构造二叉树
 
 使用 map 存放下标。
@@ -3011,54 +3123,6 @@ class Solution {
     }
 }
 ```
-
-
-
-## 买卖股票的最佳时机
-
-动态规划 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
-
-```java
-class Solution {
-    public int maxProfit(int[] prices) {
-        int minPrice = Integer.MAX_VALUE;
-        int maxProfit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < minPrice) {
-                minPrice = prices[i];
-            }
-            maxProfit = Math.max(prices[i] - minPrice, maxProfit);
-        }
-        return maxProfit;
-    }
-}
-```
-
-
-
-## 买卖股票的最佳时机 II
-
-可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
-
-```java
-//输入: [7,1,5,3,6,4]
-//输出: 7
-class Solution {
-    public int maxProfit(int[] prices) {
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            int tmp = prices[i] - prices[i - 1];
-            if (tmp > 0) {
-                profit += tmp;
-            }
-        }
-
-        return profit;
-    }
-}
-```
-
-
 
 
 
@@ -3564,49 +3628,43 @@ public class Solution {
 ```java
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        if(head == null) {
-            return null;
-        }
-        //快慢指针找出环的大小
-        ListNode fast = head;
         ListNode slow = head;
-        while(fast != null && fast.next != null) {
-            fast = fast.next.next;
+        ListNode fast = head;
+	    //快慢指针找出环的大小
+        while (fast != null && fast.next != null) {
             slow = slow.next;
-            if(slow == fast) {
+            fast = fast.next.next;
+            if (fast == slow) {
                 break;
             }
         }
-        if(fast == null || fast.next == null) {
+
+        if (fast == null || fast.next == null) {
             return null;
         }
-        int sizeOfCycle = 0;
-        while(true) {
-            slow = slow.next;
-            sizeOfCycle++;
-            if(slow == fast) {
-                break;
-            }
+        
+        int cycleSize = 1;
+        while (fast.next != slow) {
+            cycleSize++;
+            fast = fast.next;
         }
+
         //快慢指针重新从链表首部出发，快指针先走sizeOfCycle步
         //然后两个指针同时一起走，步长为1，相遇节点即是环的入口
-        slow = head;
         fast = head;
-        while(sizeOfCycle-->0) {
+        slow = head;
+        while (cycleSize-- > 0) {
             fast = fast.next;
         }
-        while(true) {
-            if(fast == slow) {
-                return fast;
-            }
+        while (fast != slow) {
             fast = fast.next;
             slow = slow.next;
         }
+
+        return fast;
     }
 }
 ```
-
-
 
 
 
