@@ -1055,6 +1055,41 @@ class Solution {
 
 
 
+## 合并区间
+
+给出一个区间的集合，请合并所有重叠的区间。
+
+```
+输入: intervals = [[1,3],[2,6],[8,10],[15,18]]
+输出: [[1,6],[8,10],[15,18]]
+解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+```
+
+先对区间左边界排序 `Array.sort(arr, (i1, i2) -> i1[0] - i2[0])`，然后新建数组进行合并。
+
+```java
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            throw new IllegalArgumentException("array is null or array is empty");
+        }
+
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]); //lambda表达式写法，返回值是int
+
+        int index = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[index][1] < intervals[i][0]) {
+                intervals[++index] = intervals[i]; //++index，先自增，再取值
+            } else {
+                intervals[index][1] = Math.max(intervals[i][1], intervals[index][1]);
+            }
+        }
+
+        return Arrays.copyOf(intervals, index + 1); //第二个参数是数组长度
+    }
+}
+```
+
 
 
 ## 字符串转换整数*
@@ -2075,43 +2110,6 @@ class Solution {
         }
 
         return ans;
-    }
-}
-```
-
-
-
-## 合并区间
-
-给出一个区间的集合，请合并所有重叠的区间。
-
-```
-输入: intervals = [[1,3],[2,6],[8,10],[15,18]]
-输出: [[1,6],[8,10],[15,18]]
-解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
-```
-
-先对区间左边界排序 `Array.sort(arr, (i1, i2) -> i1[0] - i2[0])`，然后新建数组进行合并。
-
-```java
-class Solution {
-    public int[][] merge(int[][] intervals) {
-        if (intervals == null || intervals.length == 0) {
-            throw new IllegalArgumentException("array is null or array is empty");
-        }
-        Arrays.sort(intervals, (i1, i2) -> i1[0] - i2[0]);//返回值是int
-        int[][] ans = new int[intervals.length][2];
-        ans[0] = intervals[0];
-        int index = 0;
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] > ans[index][1]) {
-                ans[++index] = intervals[i];
-            } else {
-                ans[index][1] = Math.max(ans[index][1], intervals[i][1]);
-            }
-        }
-
-        return Arrays.copyOf(ans, index + 1);//第二个参数是数组长度
     }
 }
 ```
