@@ -1092,6 +1092,83 @@ class Solution {
 
 
 
+## 对称的二叉树
+
+```java
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isMirror(root.left, root.right);
+    }
+
+    public boolean isMirror(TreeNode node1, TreeNode node2) {
+        if (node1 == null && node2 == null) {
+            return true;
+        }
+        
+        if (node1 == null || node2 == null || node1.val != node2.val) {
+            return false;
+        }
+
+        return isMirror(node1.left, node2.right) && isMirror(node1.right, node2.left);
+    }
+}
+```
+
+
+
+## 用栈实现队列
+
+```java
+class MyQueue {
+
+    private Stack<Integer> s1;
+    private Stack<Integer> s2;
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        s1 = new Stack<>();
+        s2 = new Stack<>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        s1.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        if (!s2.isEmpty()) {
+            return s2.pop();
+        }
+        while (!s1.isEmpty()) {
+            s2.push(s1.pop());
+        }
+        return s2.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        if (!s2.isEmpty()) {
+            return s2.peek();
+        }
+        while (!s1.isEmpty()) {
+            s2.push(s1.pop());
+        }
+        return s2.peek();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return s1.isEmpty() && s2.isEmpty();
+    }
+}
+```
+
+
+
 ## 字符串转换整数*
 
 ```
@@ -2833,30 +2910,6 @@ class Solution {
                 return;
             }
         }
-    }
-}
-```
-
-
-
-## 对称的二叉树
-
-```java
-class Solution {
-    public boolean isSymmetric(TreeNode root) {
-        return isMirror(root, root);
-    }
-
-    private boolean isMirror(TreeNode node1, TreeNode node2) {
-        if (node1 == null && node2 == null) {
-            return true;
-        }
-        if (node1 == null || node2 == null) {
-            return false;
-        }
-        return (node1.val == node2.val)
-            && isMirror(node1.left, node2.right)
-            && isMirror(node1.right, node2.left);
     }
 }
 ```
