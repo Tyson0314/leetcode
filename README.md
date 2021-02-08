@@ -1169,6 +1169,56 @@ class MyQueue {
 
 
 
+## 最小栈
+
+使用两个栈实现，data存放数据，minHelper存放最小值。当入栈的数据小于或等于minHelper栈顶的数据时，将该数据放进minHelper。
+
+```java
+class MinStack {
+    private Stack<Integer> data;
+    private Stack<Integer> minHelper;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        data = new Stack<>();
+        minHelper = new Stack<>();
+    }
+    
+    public void push(int x) {
+        data.push(x);
+        if (minHelper.isEmpty() || minHelper.peek() >= x) { //minHelper栈顶与x相等，也入栈(0,1,0)
+            minHelper.push(x);
+        }
+    }
+    
+    public void pop() {
+        if (!data.isEmpty()) {
+            int x = data.pop();
+
+            if (x == minHelper.peek()) {
+                minHelper.pop();
+            }
+        }
+    }
+    
+    public int top() {
+        if (!data.isEmpty()) {
+            return data.peek();
+        }
+        throw new RuntimeException("栈为空");
+    }
+    
+    public int getMin() {
+        if (!data.isEmpty()) {
+            return minHelper.peek();
+        }
+        throw new RuntimeException("栈为空");
+    }
+}
+```
+
+
+
 ## 字符串转换整数*
 
 ```
