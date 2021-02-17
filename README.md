@@ -1219,6 +1219,87 @@ class MinStack {
 
 
 
+## 最长公共子序列
+
+动态规划。`dp[i][j]`表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度。dp横坐标或纵坐标为0表示空字符串，`dp[0][j] = dp[i][0] = 0`，无需额外处理base case。
+
+![image-20210217170326851](.\img\longestCommonSubsequence.png)
+
+```java
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        char[] arr1 = text1.toCharArray();
+        char[] arr2 = text2.toCharArray();
+        //dp[0][x]和dp[x][0]表示有一个为空字符串
+        //dp[1][1]为text1第一个字符和text2第一个字符的最长公共子序列的长度
+        //dp[i][j]表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度
+        int len1 = arr1.length;
+        int len2 = arr2.length;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 1; i < len1 + 1; i++) {
+            for (int j = 1; j < len2 + 1; j++) {
+                if (arr1[i - 1] == arr2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[len1][len2];
+    }
+}
+```
+
+`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。需要处理base case。
+
+```java
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        char[] arr1 = text1.toCharArray();
+        char[] arr2 = text2.toCharArray();
+
+        int len1 = arr1.length;
+        int len2 = arr2.length;
+        //`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。
+        int[][] dp = new int[len1][len2];
+
+        if (arr1[0] == arr2[0]) {
+            dp[0][0] = 1;
+        }
+        for (int i = 1; i < len1; i++) {
+            if (arr1[i] == arr2[0]) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = dp[i - 1][0];
+            }
+        }
+        for (int i = 1; i < len2; i++) {
+            if (arr1[0] == arr2[i]) {
+                dp[0][i] = 1;
+            } else {
+                dp[0][i] = dp[0][i - 1];
+            }
+        }
+
+        for (int i = 1; i < len1; i++) {
+            for (int j = 1; j < len2; j++) {
+                if (arr1[i] == arr2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[len1 - 1][len2 - 1];
+    }
+}
+```
+
+
+
 ## 字符串转换整数*
 
 ```
