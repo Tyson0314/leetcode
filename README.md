@@ -1300,6 +1300,95 @@ class Solution {
 
 
 
+## 最长上升子序列
+
+```
+输入: [10,9,2,5,3,7,101,18]
+输出: 4 
+解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
+```
+
+[动态规划](https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/)
+
+dp[i] 的值代表 `nums` 前 i 数字的最长子序列长度。
+
+时间复杂度O(N2)。
+
+```java
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) { //[]
+            return 0;
+        }
+        int len = nums.length;
+        //dp[i]:以i结尾的子序列的最大长度
+        int dp[] = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            dp[i] = 1;
+        }
+
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        int maxLen = 1;
+        for (int i = 1; i < len; i++) {
+            if (maxLen < dp[i]) {
+                maxLen = dp[i];
+            }
+        }
+
+        return maxLen;
+    }
+}
+```
+
+
+
+## 二叉树的完全性检验
+
+层序遍历，当且仅当存在两个相邻节点：前一个为null，后一个不为null时，则不是完全二叉树。
+
+```java
+       1
+      / \
+     2   3
+    / \   \
+   4   5   6
+层序遍历序列为：[1, 2, 3, 4, 5, null, 6]，其中 null 出现在了6前面，所以不是完全二叉树
+```
+
+```java
+class Solution {
+    public boolean isCompleteTree(TreeNode root) {
+        LinkedList<TreeNode> list = new LinkedList<>();
+        TreeNode pre = root;
+        TreeNode cur = root;
+        list.addLast(root);
+
+        while (!list.isEmpty()) {
+            cur = list.removeFirst();
+            if (cur != null) {
+                if (pre == null) {
+                    return false;
+                }
+                list.addLast(cur.left);
+                list.addLast(cur.right);
+            }
+            pre = cur;
+        }
+        return true;
+    }
+}
+```
+
+
+
 ## 字符串转换整数*
 
 ```
@@ -4229,56 +4318,6 @@ public class Solution {
             }
         }
         return s.substring(begin, begin + maxLen); //substring(i, j)截取i到j(不包含j)的字符串
-    }
-}
-```
-
-
-
-## 最长上升子序列
-
-```
-输入: [10,9,2,5,3,7,101,18]
-输出: 4 
-解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
-```
-
-[动态规划](https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/)
-
-dp[i] 的值代表 `nums` 前 i 数字的最长子序列长度。
-
-时间复杂度O(N2)。
-
-```java
-class Solution {
-    public int lengthOfLIS(int[] nums) {
-        if (nums == null || nums.length == 0) { //[]
-            return 0;
-        }
-        int len = nums.length;
-        //dp[i]:以i结尾的子序列的最大长度
-        int dp[] = new int[len];
-
-        for (int i = 0; i < len; i++) {
-            dp[i] = 1;
-        }
-
-        for (int i = 1; i < len; i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-        }
-
-        int maxLen = 1;
-        for (int i = 1; i < len; i++) {
-            if (maxLen < dp[i]) {
-                maxLen = dp[i];
-            }
-        }
-
-        return maxLen;
     }
 }
 ```
