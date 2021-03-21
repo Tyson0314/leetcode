@@ -2,6 +2,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [动态规划](#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
+  - [最长上升子序列](#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97)
+  - [最大子数组和](#%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C)
+  - [买卖股票的最佳时机](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA)
+  - [最长公共子序列](#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97)
+  - [不同路径II](#%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84ii)
+  - [接雨水](#%E6%8E%A5%E9%9B%A8%E6%B0%B4)
+  - [分割回文串](#%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2)
+  - [最长回文子串](#%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2)
+  - [单词拆分](#%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86)
+  - [不同的二叉搜索树](#%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
+  - [解码方法](#%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95)
+  - [三角形最小路径和](#%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C)
+  - [乘积最大子数组](#%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84)
 - [无重复字符的最长子串](#%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2)
 - [二叉树的最近公共祖先](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88)
 - [数组中的第K个最大元素](#%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACk%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0)
@@ -9,11 +23,30 @@
 - [相交链表](#%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8)
 - [反转链表](#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8)
 - [反转链表II](#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8ii)
+- [K 个一组翻转链表](#k-%E4%B8%AA%E4%B8%80%E7%BB%84%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8)
+- [二叉树的右视图](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE)
 - [整数反转](#%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC)
-- [字符串转换整数](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0)
+- [二叉树的直径](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84)
+- [验证二叉搜索树](#%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
+- [二叉树的最大深度](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6)
+- [回文链表](#%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8)
+- [LRU](#lru)
+- [字符串相加](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%8A%A0)
+- [两数之和](#%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C)
+- [三数之和](#%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C)
+- [买卖股票的最佳时机 II](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii)
+- [二叉树锯齿形层次遍历](#%E4%BA%8C%E5%8F%89%E6%A0%91%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86)
+- [多数元素](#%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0)
+- [合并区间](#%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4)
+- [对称的二叉树](#%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91)
+- [用栈实现队列](#%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97)
+- [最小栈](#%E6%9C%80%E5%B0%8F%E6%A0%88)
+- [二叉树的完全性检验](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%8C%E5%85%A8%E6%80%A7%E6%A3%80%E9%AA%8C)
+- [排序链表](#%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8)
+- [最长连续序列](#%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97)
+- [字符串转换整数*](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0)
 - [回文数](#%E5%9B%9E%E6%96%87%E6%95%B0)
 - [盛最多水的容器](#%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8)
-- [三数之和](#%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C)
 - [电话号码的组合](#%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E7%BB%84%E5%90%88)
 - [四数之和](#%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C)
 - [删除链表倒数第n个节点](#%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACn%E4%B8%AA%E8%8A%82%E7%82%B9)
@@ -37,7 +70,6 @@
 - [旋转图像](#%E6%97%8B%E8%BD%AC%E5%9B%BE%E5%83%8F)
 - [跳跃游戏](#%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F)
 - [螺旋矩阵](#%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5)
-- [合并区间](#%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4)
 - [螺旋矩阵II](#%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5ii)
 - [第 k 个排列](#%E7%AC%AC-k-%E4%B8%AA%E6%8E%92%E5%88%97)
 - [简化路径](#%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84)
@@ -52,12 +84,8 @@
 - [删除排序链表的重复元素](#%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0)
 - [分隔链表](#%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8)
 - [格雷编码](#%E6%A0%BC%E9%9B%B7%E7%BC%96%E7%A0%81)
-- [不同的二叉搜索树](#%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
 - [子集II](#%E5%AD%90%E9%9B%86ii)
-- [解码方法](#%E8%A7%A3%E7%A0%81%E6%96%B9%E6%B3%95)
 - [复原ip](#%E5%A4%8D%E5%8E%9Fip)
-- [对称的二叉树](#%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91)
-- [二叉树锯齿形层次遍历](#%E4%BA%8C%E5%8F%89%E6%A0%91%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86)
 - [从前序与中序遍历序列构造二叉树](#%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91)
 - [将有序数组转换为二叉搜索树](#%E5%B0%86%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
 - [有序链表转换二叉搜索树](#%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8%E8%BD%AC%E6%8D%A2%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91)
@@ -65,28 +93,19 @@
 - [二叉树的最小深度](#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6)
 - [二叉树展开为链表](#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B1%95%E5%BC%80%E4%B8%BA%E9%93%BE%E8%A1%A8)
 - [杨辉三角II](#%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92ii)
-- [三角形最小路径和](#%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C)
-- [买卖股票的最佳时机](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA)
-- [买卖股票的最佳时机 II](#%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA-ii)
 - [验证回文串](#%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2)
 - [被围绕的区域](#%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F)
 - [单词接龙](#%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99)
-- [分割回文串](#%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2)
 - [求根到叶子节点数字之和](#%E6%B1%82%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C)
 - [克隆图](#%E5%85%8B%E9%9A%86%E5%9B%BE)
 - [只出现一次的数字](#%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97)
 - [复制带随机指针的链表](#%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8)
-- [单词拆分](#%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86)
 - [环形链表](#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8)
 - [环形链表II](#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8ii)
 - [只出现一次的数字 II](#%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97-ii)
 - [重排链表](#%E9%87%8D%E6%8E%92%E9%93%BE%E8%A1%A8)
 - [对链表进行插入排序](#%E5%AF%B9%E9%93%BE%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
 - [逆波兰表达式求值](#%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC)
-- [排序链表](#%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8)
-- [乘积最大子数组](#%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84)
-- [最长回文子串](#%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2)
-- [最长上升子序列](#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -98,6 +117,596 @@
 | [版本比较](https://leetcode-cn.com/problems/compare-version-numbers/) | [CompareVersion](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/CompareVersion.java) |
 | [最大数](https://leetcode-cn.com/problems/largest-number/)   | [LargestNumber](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/LargestNumber.java) |
 | [最大正方形](https://leetcode-cn.com/problems/maximal-square/) | [MaximalSquare](https://github.com/Tyson0314/leetcode/blob/master/src/leetcode/MaximalSquare.java) |
+
+
+
+## 动态规划
+
+动态规划常常适用于有重叠子问题的问题。动态规划的基本思想：若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得出原问题的解。
+
+动态规划法试图仅仅解决每个子问题一次，一旦某个给定子问题的解已经算出，则将其记忆化存储，以便下次遇到同一个子问题的时候直接查表得到解。
+
+动态规划的解题思路：1、状态定义；2、状态转移方程；3、初始状态。
+
+### 最长上升子序列
+
+```
+输入: [10,9,2,5,3,7,101,18]
+输出: 4 
+解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
+```
+
+[动态规划](https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/)
+
+dp[i] 的值代表以nums[i]结尾的最大递增子序列的长度。
+
+```
+[10,9,2,5,3,7,101,18]
+dp[5]：以nums[5]，也就是7结尾的最大递增子序列（2 5 7或者2 3 7）的长度（3）
+```
+
+时间复杂度O(N2)。
+
+```java
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) { //[]
+            return 0;
+        }
+        int len = nums.length;
+        //dp[i]:以nums[i]结尾的最大递增子序列的长度
+        int dp[] = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            dp[i] = 1;
+        }
+
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        int maxLen = 1;
+        for (int i = 1; i < len; i++) {
+            if (maxLen < dp[i]) {
+                maxLen = dp[i];
+            }
+        }
+
+        return maxLen;
+    }
+}
+```
+
+
+
+### 最大子数组和
+
+dp[i]表示以nums[i]结尾的子数组的最大和。`dp[i] = dp[i - 1] > 0 ? ( dp[i - 1]  + nums[i]) : nums[i]`
+
+dp[i+1]取决于dp[i]的值，不需要使用数组保存状态，只需要一个变量sum来保存上一个状态即可。
+
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int max = nums[0];
+        int sum = 0;
+
+        for (int num : nums) {
+            if (sum > 0) {
+                sum += num;
+            } else {
+                sum = num;
+            }
+            max = Math.max(max, sum);
+        }
+
+        return max;
+    }
+}
+```
+
+
+
+### 买卖股票的最佳时机
+
+动态规划 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+            maxProfit = Math.max(prices[i] - minPrice, maxProfit);
+        }
+        return maxProfit;
+    }
+}
+```
+
+
+
+### 最长公共子序列
+
+一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
+
+动态规划。`dp[i][j]`表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度。dp横坐标或纵坐标为0表示空字符串，`dp[0][j] = dp[i][0] = 0`，无需额外处理base case。
+
+![image-20210217170326851](.\img\longestCommonSubsequence.png)
+
+```java
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        char[] arr1 = text1.toCharArray();
+        char[] arr2 = text2.toCharArray();
+        //dp[0][x]和dp[x][0]表示有一个为空字符串
+        //dp[1][1]为text1第一个字符和text2第一个字符的最长公共子序列的长度
+        //dp[i][j]表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度
+        int len1 = arr1.length;
+        int len2 = arr2.length;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 1; i < len1 + 1; i++) {
+            for (int j = 1; j < len2 + 1; j++) {
+                if (arr1[i - 1] == arr2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[len1][len2];
+    }
+}
+```
+
+`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。需要处理base case。
+
+```java
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        char[] arr1 = text1.toCharArray();
+        char[] arr2 = text2.toCharArray();
+
+        int len1 = arr1.length;
+        int len2 = arr2.length;
+        //`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。
+        int[][] dp = new int[len1][len2];
+
+        if (arr1[0] == arr2[0]) {
+            dp[0][0] = 1;
+        }
+        for (int i = 1; i < len1; i++) {
+            if (arr1[i] == arr2[0]) {
+                dp[i][0] = 1;
+            } else {
+                dp[i][0] = dp[i - 1][0];
+            }
+        }
+        for (int i = 1; i < len2; i++) {
+            if (arr1[0] == arr2[i]) {
+                dp[0][i] = 1;
+            } else {
+                dp[0][i] = dp[0][i - 1];
+            }
+        }
+
+        for (int i = 1; i < len1; i++) {
+            for (int j = 1; j < len2; j++) {
+                if (arr1[i] == arr2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[len1 - 1][len2 - 1];
+    }
+}
+```
+
+
+
+### 不同路径II
+
+一个机器人位于一个 *m x n* 网格的左上角 。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角。
+
+考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？网格中的障碍物和空位置分别用 `1` 和 `0` 来表示。
+
+```java
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
+            throw new IllegalArgumentException("array is null or array is empty");
+        }
+        if (obstacleGrid[0][0] == 1) { //[[1]]
+            return 0;
+        }
+        int rows = obstacleGrid.length;
+        int columns = obstacleGrid[0].length;
+        int[][] path = new int[rows][columns];
+        path[0][0] = 1;
+        for (int i = 1; i < rows; i++) {
+            path[i][0] = (path[i - 1][0] == 1 && obstacleGrid[i][0] == 0) ? 1 : 0;
+        }
+        for (int j = 1; j < columns; j++) {
+            path[0][j] = (path[0][j - 1] == 1 &&  obstacleGrid[0][j] == 0) ? 1 : 0;
+        }
+
+        for (int m = 1; m < rows; m++) {
+            for (int n = 1; n < columns; n++) {
+                path[m][n] = obstacleGrid[m][n] == 0 ? path[m - 1][n] + path[m][n - 1] : 0;
+            }
+        }
+
+        return path[rows - 1][columns - 1];
+    }
+}
+```
+
+
+
+### 接雨水
+
+动态规划，使用两个数组空间。leftMax[i] 代表第 `i` 列左边（不包含自身）最高的墙的高度，rightMax[i] 代表第 `i` 列右边最高的墙的高度。
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        int len = height.length;
+        int res = 0;
+        int[] leftMax = new int[len];
+        int[] rightMax = new int[len];
+
+        for (int i = 1; i < len; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
+        }
+        
+        for (int j = len - 2; j > 0; j--) {
+            rightMax[j] = Math.max(rightMax[j + 1], height[j + 1]);
+        }
+
+        for (int i = 1; i < len - 1; i++) {
+            int min = Math.min(leftMax[i], rightMax[i]);
+            if (min > height[i]) {
+                res += min - height[i];
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+[双指针法，只需要两个变量存储状态](https://leetcode-cn.com/problems/trapping-rain-water/solution/jie-yu-shui-by-leetcode/327718/)
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        int maxLeft = 0, maxRight = 0;
+        int left = 0;
+        int right = height.length - 1;
+        int res = 0;
+
+        while (left <= right) {
+            if (maxLeft < maxRight) {
+                if (height[left] < maxLeft) {
+                    res += (maxLeft - height[left]);
+                }
+                maxLeft = Math.max(maxLeft, height[left]);
+                left++;
+            } else {
+                if (height[right] < maxRight) {
+                    res += (maxRight - height[right]);
+                }
+                maxRight = Math.max(maxRight, height[right]);
+                right--;
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+
+
+### 分割回文串
+
+```
+输入: "aab"
+输出:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+```
+
+[参考](https://leetcode-cn.com/problems/palindrome-partitioning/solution/hui-su-you-hua-jia-liao-dong-tai-gui-hua-by-liweiw/)
+
+使用动态规划预标记出哪一段属于回文串。
+
+```java
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        
+        int len = s.length();
+        if (s == null || len == 0) {
+            return res;
+        }
+
+        boolean dp[][] = new boolean[len][len];
+        char[] charArr = s.toCharArray();
+
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+
+        for (int right = 1; right < len; right++) {
+            for (int left = 0; left < right; left++) {
+                    dp[left][right] = charArr[left] == charArr[right] && (right - left <= 2 || dp[left + 1][right - 1]);
+            }
+        }
+
+        LinkedList<String> path = new LinkedList<>();
+        dfs(s, 0, res, path, dp);
+
+        return res;
+    }
+
+    private void dfs(String s, int start, List<List<String>> res, LinkedList<String> path, boolean[][] dp) {
+        if (start == s.length()) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = start; i < s.length(); i++) {
+            if (dp[start][i]) {
+                path.addLast(s.substring(start, i + 1));
+                dfs(s, i + 1, res, path, dp);
+                path.removeLast();
+            }
+        }
+    }
+}
+```
+
+
+
+### 最长回文子串
+
+```
+输入：s = "babad"
+输出："bab"
+解释："aba" 同样是符合题意的答案。
+```
+
+[动态规划](https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/)
+
+1. 定义状态。`dp[i][j]` 表示子串 `s[i..j]` 是否为回文子串
+
+2. 状态转移方程：`dp[i][j] = (s[i] == s[j]) and dp[i + 1][j - 1]`
+3. 初始化的时候，单个字符一定是回文串，因此把对角线先初始化为 `true`，即 `dp[i][i] = true` 。
+4. 只要一得到 `dp[i][j] = true`，就记录子串的长度和起始位置
+
+注意事项：总是先得到小子串的回文判定，然后大子串才能参考小子串的判断结果，即填表顺序很重要。
+
+![image-20201115230411764](./img/image-20201115230411764.png)
+
+时间复杂度O(N2)，空间复杂度O(N2)，因为使用了二维数组。
+
+```java
+public class Solution {
+
+    public String longestPalindrome(String s) {
+        // 特判
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+
+        int maxLen = 1;
+        int begin = 0;
+
+        // dp[i][j] 表示 s[i, j] 是否是回文串
+        boolean[][] dp = new boolean[len][len];
+        char[] charArray = s.toCharArray();
+
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+        for (int j = 1; j < len; j++) {
+            for (int i = 0; i < j; i++) {
+                if (charArray[i] != charArray[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+
+                // 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文，此时记录回文长度和起始位置
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen); //substring(i, j)截取i到j(不包含j)的字符串
+    }
+}
+```
+
+
+
+### 单词拆分
+
+![image-20201007205706475](./img/word-break.png)
+
+```java
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int len = s.length(), maxw = 0;
+        //dp[i]表示前i个字母组成的字符串是否可以被拆分
+        boolean[] dp = new boolean[len + 1];
+        //状态转移方程初始化条件
+        dp[0] = true;
+        Set<String> set = new HashSet();
+        for(String str : wordDict){
+            set.add(str);
+            maxw = Math.max(maxw, str.length());
+        }
+        for(int i = 1; i < len + 1; i++){
+            for(int j = i; j >= 0 && j >= i - maxw; j--){
+                if(dp[j] && set.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[len];
+    }
+}
+```
+
+
+
+### 不同的二叉搜索树
+
+给定一个整数 *n*，求以 1 ... *n* 为节点组成的二叉搜索树有多少种？
+
+[动态规划解法](https://leetcode-cn.com/problems/unique-binary-search-trees/solution/bu-tong-de-er-cha-sou-suo-shu-by-leetcode/)
+
+```java
+class Solution {
+    public int numTrees(int n) {
+        int arr[] = new int[n + 1];
+        arr[0] = 1;
+        arr[1] = 1;
+        int sum = 0;
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                arr[i] += arr[j - 1] * arr[i - j];
+            }
+        }
+
+        return arr[n];
+    }
+}
+```
+
+
+
+### 解码方法
+
+https://leetcode-cn.com/problems/decode-ways/
+
+```java
+class Solution {
+    public int numDecodings(String s) {
+        char[] arr = s.toCharArray();
+        if (arr[0] == '0') {
+            return 0;
+        }
+
+        int cur = 1;
+        int pre = 1;
+        for (int i = 1; i < arr.length; i++) {
+            int tmp = cur;
+            if (arr[i] == '0') {
+                if (arr[i - 1] == '1' || arr[i - 1] == '2') {
+                    cur = pre;
+                } else {
+                    return 0;
+                }
+            } else if (arr[i - 1] == '1' || (arr[i - 1] == '2' && arr[i] >= '0' && arr[i] <= '6')) {
+                cur += pre;
+            }
+            pre = tmp;
+        }
+
+        return cur;
+    }
+}
+```
+
+
+
+### 三角形最小路径和
+
+给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。
+
+```java
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+```
+
+动态规划。
+
+```java
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int size = triangle.size();
+        int[] minLen = new int[size + 1];//+1
+        for (int i = size - 1; i >= 0 ; i--) {
+            for (int j = 0; j <= i; j++) {
+                minLen[j] = Math.min(minLen[j], minLen[j + 1]) + triangle.get(i).get(j);
+            }
+        }
+
+        return minLen[0];
+    }
+}
+```
+
+
+
+### 乘积最大子数组
+
+动态规划。
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        int curMax = 1, curMin = 1;//保证i=1时，结果正确
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < 0) {
+                int tmp = curMax;
+                curMax = curMin;
+                curMin = tmp;
+            }
+            curMax = Math.max(curMax, curMax * nums[i]);
+            curMin = Math.min(curMin, curMin * nums[i]);
+
+            max = Math.max(max, curMax);//[2,-2]，当i=1时，curMax与curMin交换，curMax=1，max=2，故取max与curMax中最大值
+        }
+        return max;
+    }
+}
+```
 
 
 
@@ -520,36 +1129,6 @@ class Solution {
 
 
 
-## 最大子序列和
-
-动态规划。dp[i+1]取决于dp[i]的值，不需要使用数组保存状态，只需要一个变量sum来保存上一个状态。
-
-```java
-class Solution {
-    public int maxSubArray(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-
-        int max = nums[0];
-        int sum = 0;
-
-        for (int num : nums) {
-            if (sum > 0) {
-                sum += num;
-            } else {
-                sum = num;
-            }
-            max = Math.max(max, sum);
-        }
-
-        return max;
-    }
-}
-```
-
-
-
 ## 验证二叉搜索树
 
 利用中序遍历。
@@ -864,28 +1443,6 @@ class Solution {
 
 
 
-## 买卖股票的最佳时机
-
-动态规划 前i天的最大收益 = max{前i-1天的最大收益，第i天的价格-前i-1天中的最小价格}
-
-```java
-class Solution {
-    public int maxProfit(int[] prices) {
-        int minPrice = Integer.MAX_VALUE;
-        int maxProfit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < minPrice) {
-                minPrice = prices[i];
-            }
-            maxProfit = Math.max(prices[i] - minPrice, maxProfit);
-        }
-        return maxProfit;
-    }
-}
-```
-
-
-
 ## 买卖股票的最佳时机 II
 
 可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
@@ -954,71 +1511,6 @@ class Solution {
                 }
             }
             res.add(list);
-        }
-
-        return res;
-    }
-}
-```
-
-
-
-## 接雨水
-
-动态规划，使用两个数组空间。leftMax[i] 代表第 `i` 列左边（不包含自身）最高的墙的高度，rightMax[i] 代表第 `i` 列右边最高的墙的高度。
-
-```java
-class Solution {
-    public int trap(int[] height) {
-        int len = height.length;
-        int res = 0;
-        int[] leftMax = new int[len];
-        int[] rightMax = new int[len];
-
-        for (int i = 1; i < len; i++) {
-            leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
-        }
-        
-        for (int j = len - 2; j > 0; j--) {
-            rightMax[j] = Math.max(rightMax[j + 1], height[j + 1]);
-        }
-
-        for (int i = 1; i < len - 1; i++) {
-            int min = Math.min(leftMax[i], rightMax[i]);
-            if (min > height[i]) {
-                res += min - height[i];
-            }
-        }
-
-        return res;
-    }
-}
-```
-
-[双指针法，只需要两个变量存储状态](https://leetcode-cn.com/problems/trapping-rain-water/solution/jie-yu-shui-by-leetcode/327718/)
-
-```java
-class Solution {
-    public int trap(int[] height) {
-        int maxLeft = 0, maxRight = 0;
-        int left = 0;
-        int right = height.length - 1;
-        int res = 0;
-
-        while (left <= right) {
-            if (maxLeft < maxRight) {
-                if (height[left] < maxLeft) {
-                    res += (maxLeft - height[left]);
-                }
-                maxLeft = Math.max(maxLeft, height[left]);
-                left++;
-            } else {
-                if (height[right] < maxRight) {
-                    res += (maxRight - height[right]);
-                }
-                maxRight = Math.max(maxRight, height[right]);
-                right--;
-            }
         }
 
         return res;
@@ -1213,140 +1705,6 @@ class MinStack {
             return minHelper.peek();
         }
         throw new RuntimeException("栈为空");
-    }
-}
-```
-
-
-
-## 最长公共子序列
-
-一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
-例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
-
-动态规划。`dp[i][j]`表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度。dp横坐标或纵坐标为0表示空字符串，`dp[0][j] = dp[i][0] = 0`，无需额外处理base case。
-
-![image-20210217170326851](.\img\longestCommonSubsequence.png)
-
-```java
-class Solution {
-    public int longestCommonSubsequence(String text1, String text2) {
-        char[] arr1 = text1.toCharArray();
-        char[] arr2 = text2.toCharArray();
-        //dp[0][x]和dp[x][0]表示有一个为空字符串
-        //dp[1][1]为text1第一个字符和text2第一个字符的最长公共子序列的长度
-        //dp[i][j]表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度
-        int len1 = arr1.length;
-        int len2 = arr2.length;
-        int[][] dp = new int[len1 + 1][len2 + 1];
-
-        for (int i = 1; i < len1 + 1; i++) {
-            for (int j = 1; j < len2 + 1; j++) {
-                if (arr1[i - 1] == arr2[j - 1]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                }
-            }
-        }
-
-        return dp[len1][len2];
-    }
-}
-```
-
-`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。需要处理base case。
-
-```java
-class Solution {
-    public int longestCommonSubsequence(String text1, String text2) {
-        char[] arr1 = text1.toCharArray();
-        char[] arr2 = text2.toCharArray();
-
-        int len1 = arr1.length;
-        int len2 = arr2.length;
-        //`dp[i][j]`表示text1以i结尾的子串和text2以j结尾的子串的最长公共子序列的长度。
-        int[][] dp = new int[len1][len2];
-
-        if (arr1[0] == arr2[0]) {
-            dp[0][0] = 1;
-        }
-        for (int i = 1; i < len1; i++) {
-            if (arr1[i] == arr2[0]) {
-                dp[i][0] = 1;
-            } else {
-                dp[i][0] = dp[i - 1][0];
-            }
-        }
-        for (int i = 1; i < len2; i++) {
-            if (arr1[0] == arr2[i]) {
-                dp[0][i] = 1;
-            } else {
-                dp[0][i] = dp[0][i - 1];
-            }
-        }
-
-        for (int i = 1; i < len1; i++) {
-            for (int j = 1; j < len2; j++) {
-                if (arr1[i] == arr2[j]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                }
-            }
-        }
-
-        return dp[len1 - 1][len2 - 1];
-    }
-}
-```
-
-
-
-## 最长上升子序列
-
-```
-输入: [10,9,2,5,3,7,101,18]
-输出: 4 
-解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。
-```
-
-[动态规划](https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/)
-
-dp[i] 的值代表 `nums` 前 i 数字的最长子序列长度。
-
-时间复杂度O(N2)。
-
-```java
-class Solution {
-    public int lengthOfLIS(int[] nums) {
-        if (nums == null || nums.length == 0) { //[]
-            return 0;
-        }
-        int len = nums.length;
-        //dp[i]:以i结尾的子序列的最大长度
-        int dp[] = new int[len];
-
-        for (int i = 0; i < len; i++) {
-            dp[i] = 1;
-        }
-
-        for (int i = 1; i < len; i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-        }
-
-        int maxLen = 1;
-        for (int i = 1; i < len; i++) {
-            if (maxLen < dp[i]) {
-                maxLen = dp[i];
-            }
-        }
-
-        return maxLen;
     }
 }
 ```
@@ -3155,31 +3513,6 @@ class Solution {
 
 
 
-## 不同的二叉搜索树
-
-给定一个整数 *n*，求以 1 ... *n* 为节点组成的二叉搜索树有多少种？
-
-[动态规划解法](https://leetcode-cn.com/problems/unique-binary-search-trees/solution/bu-tong-de-er-cha-sou-suo-shu-by-leetcode/)
-
-```java
-class Solution {
-    public int numTrees(int n) {
-        int arr[] = new int[n + 1];
-        arr[0] = 1;
-        arr[1] = 1;
-        int sum = 0;
-
-        for (int i = 2; i <= n; i++) {
-            for (int j = 1; j <= i; j++) {
-                arr[i] += arr[j - 1] * arr[i - j];
-            }
-        }
-
-        return arr[n];
-    }
-}
-```
-
 ## 子集II
 
 给定一个可能包含重复元素的整数数组 ***nums***，返回该数组所有可能的子集（幂集）。
@@ -3207,39 +3540,6 @@ class Solution {
             subsetsWithDupHelper(nums, i + 1, subset);
             subset.pop();
         }
-    }
-}
-```
-
-## 解码方法
-
-https://leetcode-cn.com/problems/decode-ways/
-
-```java
-class Solution {
-    public int numDecodings(String s) {
-        char[] arr = s.toCharArray();
-        if (arr[0] == '0') {
-            return 0;
-        }
-
-        int cur = 1;
-        int pre = 1;
-        for (int i = 1; i < arr.length; i++) {
-            int tmp = cur;
-            if (arr[i] == '0') {
-                if (arr[i - 1] == '1' || arr[i - 1] == '2') {
-                    cur = pre;
-                } else {
-                    return 0;
-                }
-            } else if (arr[i - 1] == '1' || (arr[i - 1] == '2' && arr[i] >= '0' && arr[i] <= '6')) {
-                cur += pre;
-            }
-            pre = tmp;
-        }
-
-        return cur;
     }
 }
 ```
@@ -3539,39 +3839,6 @@ class Solution {
 
 
 
-## 三角形最小路径和
-
-给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。
-
-```java
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]
-```
-
-动态规划。
-
-```java
-class Solution {
-    public int minimumTotal(List<List<Integer>> triangle) {
-        int size = triangle.size();
-        int[] minLen = new int[size + 1];//+1
-        for (int i = size - 1; i >= 0 ; i--) {
-            for (int j = 0; j <= i; j++) {
-                minLen[j] = Math.min(minLen[j], minLen[j + 1]) + triangle.get(i).get(j);
-            }
-        }
-
-        return minLen[0];
-    }
-}
-```
-
-
-
 ## 验证回文串
 
 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。输入"A man, a plan, a canal: Panama"，输出 true。
@@ -3762,69 +4029,6 @@ class Solution {
 
 
 
-## 分割回文串
-
-```
-输入: "aab"
-输出:
-[
-  ["aa","b"],
-  ["a","a","b"]
-]
-```
-
-[参考](https://leetcode-cn.com/problems/palindrome-partitioning/solution/hui-su-you-hua-jia-liao-dong-tai-gui-hua-by-liweiw/)
-
-使用动态规划预标记出哪一段属于回文串。
-
-```java
-class Solution {
-    public List<List<String>> partition(String s) {
-        List<List<String>> res = new ArrayList<>();
-        
-        int len = s.length();
-        if (s == null || len == 0) {
-            return res;
-        }
-
-        boolean dp[][] = new boolean[len][len];
-        char[] charArr = s.toCharArray();
-
-        for (int i = 0; i < len; i++) {
-            dp[i][i] = true;
-        }
-
-        for (int right = 1; right < len; right++) {
-            for (int left = 0; left < right; left++) {
-                    dp[left][right] = charArr[left] == charArr[right] && (right - left <= 2 || dp[left + 1][right - 1]);
-            }
-        }
-
-        LinkedList<String> path = new LinkedList<>();
-        dfs(s, 0, res, path, dp);
-
-        return res;
-    }
-
-    private void dfs(String s, int start, List<List<String>> res, LinkedList<String> path, boolean[][] dp) {
-        if (start == s.length()) {
-            res.add(new ArrayList<>(path));
-            return;
-        }
-
-        for (int i = start; i < s.length(); i++) {
-            if (dp[start][i]) {
-                path.addLast(s.substring(start, i + 1));
-                dfs(s, i + 1, res, path, dp);
-                path.removeLast();
-            }
-        }
-    }
-}
-```
-
-
-
 ## 求根到叶子节点数字之和
 
 ```java
@@ -3971,38 +4175,6 @@ class Solution {
 
 方法2：1、复制节点并插入当前节点后面；2、再设定好random指针；3、最后分离出原链表与副本链表
 如： 1->2->3->null => 1->1'->2->2'->3->3'->null ； 再分离出 1->2->3->null 与 1'->2'->3'->null
-
-
-
-## 单词拆分
-
-![image-20201007205706475](./img/word-break.png)
-
-```java
-class Solution {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        int len = s.length(), maxw = 0;
-        //dp[i]表示前i个字母组成的字符串是否可以被拆分
-        boolean[] dp = new boolean[len + 1];
-        //状态转移方程初始化条件
-        dp[0] = true;
-        Set<String> set = new HashSet();
-        for(String str : wordDict){
-            set.add(str);
-            maxw = Math.max(maxw, str.length());
-        }
-        for(int i = 1; i < len + 1; i++){
-            for(int j = i; j >= 0 && j >= i - maxw; j--){
-                if(dp[j] && set.contains(s.substring(j, i))){
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-        return dp[len];
-    }
-}
-```
 
 
 
@@ -4283,95 +4455,6 @@ class Solution {
         }
 
         return stack.pop();
-    }
-}
-```
-
-
-
-## 乘积最大子数组
-
-动态规划。
-
-```java
-class Solution {
-    public int maxProduct(int[] nums) {
-        int curMax = 1, curMin = 1;//保证i=1时，结果正确
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < 0) {
-                int tmp = curMax;
-                curMax = curMin;
-                curMin = tmp;
-            }
-            curMax = Math.max(curMax, curMax * nums[i]);
-            curMin = Math.min(curMin, curMin * nums[i]);
-
-            max = Math.max(max, curMax);//[2,-2]，当i=1时，curMax与curMin交换，curMax=1，max=2，故取max与curMax中最大值
-        }
-        return max;
-    }
-}
-```
-
-
-
-## 最长回文子串
-
-[动态规划](https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/)
-
-1. 定义状态。`dp[i][j]` 表示子串 `s[i..j]` 是否为回文子串
-
-2. 状态转移方程：`dp[i][j] = (s[i] == s[j]) and dp[i + 1][j - 1]`
-3. 初始化的时候，单个字符一定是回文串，因此把对角线先初始化为 `true`，即 `dp[i][i] = true` 。
-4. 只要一得到 `dp[i][j] = true`，就记录子串的长度和起始位置
-
-注意事项：总是先得到小子串的回文判定，然后大子串才能参考小子串的判断结果，即填表顺序很重要。
-
-![image-20201115230411764](./img/image-20201115230411764.png)
-
-时间复杂度O(N2)，空间复杂度O(N2)，因为使用了二维数组。
-
-```java
-public class Solution {
-
-    public String longestPalindrome(String s) {
-        // 特判
-        int len = s.length();
-        if (len < 2) {
-            return s;
-        }
-
-        int maxLen = 1;
-        int begin = 0;
-
-        // dp[i][j] 表示 s[i, j] 是否是回文串
-        boolean[][] dp = new boolean[len][len];
-        char[] charArray = s.toCharArray();
-
-        for (int i = 0; i < len; i++) {
-            dp[i][i] = true;
-        }
-        for (int j = 1; j < len; j++) {
-            for (int i = 0; i < j; i++) {
-                if (charArray[i] != charArray[j]) {
-                    dp[i][j] = false;
-                } else {
-                    if (j - i < 3) {
-                        dp[i][j] = true;
-                    } else {
-                        dp[i][j] = dp[i + 1][j - 1];
-                    }
-                }
-
-                // 只要 dp[i][j] == true 成立，就表示子串 s[i..j] 是回文，此时记录回文长度和起始位置
-                if (dp[i][j] && j - i + 1 > maxLen) {
-                    maxLen = j - i + 1;
-                    begin = i;
-                }
-            }
-        }
-        return s.substring(begin, begin + maxLen); //substring(i, j)截取i到j(不包含j)的字符串
     }
 }
 ```
