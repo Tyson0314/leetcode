@@ -710,6 +710,90 @@ class Solution {
 
 
 
+## 贪心算法
+
+对问题求解时，总是做出在当前看来是最好的选择。
+
+### 买卖股票的最佳时机 II
+
+可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+```java
+//输入: [7,1,5,3,6,4]
+//输出: 7
+class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int tmp = prices[i] - prices[i - 1];
+            if (tmp > 0) {
+                profit += tmp;
+            }
+        }
+
+        return profit;
+    }
+}
+```
+
+### 跳跃游戏
+
+给定一个非负整数数组，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。判断你是否能够到达最后一个位置。
+
+贪心算法。
+
+```java
+class Solution {
+    public boolean canJump(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return true;
+        }
+
+        int maxIndex = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (maxIndex >= i) {
+                maxIndex = Math.max(maxIndex, i + nums[i]);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+```
+
+### 加油站
+
+在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+
+你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+
+如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+
+```java
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int len = gas.length;
+        for (int i = 0; i < len; i++) {
+            int j = i;
+            int retain = 0; //剩余油量
+            while (retain + gas[j] - cost[j] >= 0) {
+                retain = retain + gas[j] - cost[j];
+                j = (j + 1) % len;
+                if (j == i) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+```
+
+
+
 ## 无重复字符的最长子串
 
 滑动窗口。
@@ -1437,30 +1521,6 @@ class Solution {
         }
 
         return res;
-    }
-}
-```
-
-
-
-## 买卖股票的最佳时机 II
-
-可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
-
-```java
-//输入: [7,1,5,3,6,4]
-//输出: 7
-class Solution {
-    public int maxProfit(int[] prices) {
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            int tmp = prices[i] - prices[i - 1];
-            if (tmp > 0) {
-                profit += tmp;
-            }
-        }
-
-        return profit;
     }
 }
 ```
@@ -2823,35 +2883,6 @@ class Solution {
                 matrix[i][matrix.length - j - 1] = tmp;
             }
         }
-    }
-}
-```
-
-
-
-## 跳跃游戏
-
-给定一个非负整数数组，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。判断你是否能够到达最后一个位置。
-
-贪心算法。
-
-```java
-class Solution {
-    public boolean canJump(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return true;
-        }
-
-        int maxIndex = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            if (maxIndex >= i) {
-                maxIndex = Math.max(maxIndex, i + nums[i]);
-            } else {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
 ```
