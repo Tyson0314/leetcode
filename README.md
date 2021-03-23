@@ -710,6 +710,413 @@ class Solution {
 
 
 
+## 回溯
+
+### 组合总和
+
+给定一个**无重复元素**的数组 `candidates` 和一个目标数 `target` ，找出 `candidates` 中所有可以使数字和为 `target` 的组合。
+
+```
+输入：candidates = [2,3,6,7], target = 7,
+所求解集为：
+[
+  [7],
+  [2,2,3]
+]
+```
+
+数组元素可能重复。使用回溯算法。
+
+剪枝：
+
+![1587051935261](.\img\1587051935261.png)
+
+去重复组合：
+
+![1587050948930](.\img\1587050948930.png)
+
+```java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        if (candidates == null || candidates.length == 0) {
+            return ans;
+        }
+        Arrays.sort(candidates);//排序方便回溯剪枝
+        Deque<Integer> path = new ArrayDeque<>();//作为栈来使用，效率高于Stack；也可以作为队列来使用，效率高于LinkedList；线程不安全
+        combinationSum2Helper(candidates, target, 0, path);
+        return ans;
+    }
+
+    public void combinationSum2Helper(int[] arr, int target, int start, Deque<Integer> path) {
+        if (target == 0) {
+            ans.add(new ArrayList(path));
+        }
+
+        for (int i = start; i < arr.length; i++) {
+            if (target < arr[i]) {//剪枝
+                return;
+            }
+            if (i > start && arr[i] == arr[i - 1]) {//在一个层级，会产生重复
+                continue;
+            }
+            path.addLast(arr[i]);
+            combinationSum2Helper(arr, target - arr[i], i + 1, path);
+            path.removeLast();
+        }
+    }
+}
+```
+
+
+
+### 全排列
+
+给定一个 **没有重复** 数字的序列，返回其所有可能的全排列。
+
+```
+输入: [1,2,3]
+输出:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+```
+
+回溯。注意与组合总和的区别（数字有无顺序）。
+
+```java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        boolean[] flag = new boolean[nums.length];
+        ArrayDeque<Integer> path = new ArrayDeque<>();
+        permuteHelper(nums, flag, path);
+
+        return ans;
+    }
+
+    private void permuteHelper(int[] nums, boolean[] flag, ArrayDeque<Integer> path) {
+        if (path.size() == nums.length) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (flag[i]) {
+                continue;//继续循环
+            }
+            path.addLast(nums[i]);
+            flag[i] = true;
+            permuteHelper(nums, flag, path);
+            path.removeLast();
+            flag[i] = false;
+        }
+    }
+}
+```
+
+
+
+### 全排列II
+
+给定一个可包含重复数字的序列，返回所有不重复的全排列。注意与组合总和的区别。
+
+1、排序；2、同一层级相同元素剪枝。参考自：https://leetcode-cn.com/problems/permutations-ii/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liwe-2/
+
+![1587518213329](./img/permutations-ii.png)
+
+```java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return ans;
+        }
+        ArrayDeque<Integer> path = new ArrayDeque<>();
+        boolean[] used = new boolean[nums.length];
+        Arrays.sort(nums);//切记
+        dps(nums, used, path);
+
+        return ans;
+    }
+
+    private void dps(int[] nums, boolean[] used, ArrayDeque<Integer> path) {
+        if (path.size() == nums.length) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            if ((i > 0 && nums[i] == nums[i - 1]) && !used[i - 1]) {//同一层相同的元素，剪枝
+                continue;//继续循环，不是return退出循环
+            }
+            path.addLast(nums[i]);
+            used[i] = true;
+            dps(nums, used, path);
+            path.removeLast();
+            used[i] = false;
+        }
+    }
+}
+```
+
+
+
+### 子集
+
+给定一组不含重复元素的整数数组 *nums*，返回该数组所有可能的子集。解集不能包含重复的子集。
+
+回溯。
+
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            res.add(new ArrayList<>()); //空集
+            return res;
+        }
+        Stack<Integer> queue = new Stack<>();
+        subsetsHelper(res, queue, 0, nums);
+
+        return res;
+    }
+
+    public void subsetsHelper(List<List<Integer>> res, Stack<Integer> queue, int index, int[] nums) {
+        res.add(new ArrayList<>(queue));
+        
+        for (int i = index; i < nums.length; i++) {
+            queue.push(nums[i]);
+            subsetsHelper(res, queue, i + 1, nums);
+            queue.pop();
+        }
+    }
+}
+```
+
+### 括号生成
+
+使用深度优先算法。
+
+```java
+class Solution {
+    private List<String> ans = new ArrayList<>();
+
+    public List<String> generateParenthesis(int n) {
+        if (n <= 0) {
+            return ans;
+        }
+        dfs("", n, n);
+
+        return ans;
+    }
+
+    //left左括号剩下可用数目，right右括号剩下可用数目
+    private void dfs(String s, int left, int right) {
+        if (left > right || left < 0 || right < 0) {//右括号剩下的少，说明组合无效
+            return;
+        }
+
+        if (left == 0 && right == 0) {
+            ans.add(s);
+        }
+
+        dfs(s + "(", left - 1, right);
+        dfs(s + ")", left, right - 1);
+    }
+}
+```
+
+
+
+### 子集II
+
+给定一个可能包含重复元素的整数数组 ***nums***，返回该数组所有可能的子集（幂集）。
+
+```java
+class Solution {
+    private List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        Stack<Integer> subset = new Stack<>();
+        subsetsWithDupHelper(nums, 0, subset);
+        return res;
+    }
+
+    private void subsetsWithDupHelper(int[] nums, int index, Stack<Integer> subset) {
+        res.add(new ArrayList<>(subset));
+        if (index >= nums.length) {
+            return;
+        }
+        for (int i = index; i < nums.length; i++) {
+            if (i > index && nums[i] == nums[i - 1]) { //i > index
+                continue;
+            }
+            subset.push(nums[i]);
+            subsetsWithDupHelper(nums, i + 1, subset);
+            subset.pop();
+        }
+    }
+}
+```
+
+
+
+### 单词搜索
+
+给定一个二维网格和一个单词，找出该单词是否存在于网格中。
+
+```java
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+给定 word = "ABCCED", 返回 true
+给定 word = "SEE", 返回 true
+给定 word = "ABCB", 返回 false
+```
+
+注意避免同一元素多次使用（[A B C]，A->B->A）。
+
+```java
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board[0].length; j++) {
+                if (existHelper(board, i, j, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean existHelper(char[][] board, int row, int col, String word, int index) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(index)) {
+            return false;
+        }
+        if (board[row][col] == word.charAt(index)) {
+            index++;
+        }
+        char tmp = board[row][col];
+        board[row][col] = '#'; //防止回溯自身
+        boolean result = existHelper(board, row - 1, col, word, index) ||
+                existHelper(board, row + 1, col, word, index) || 
+                existHelper(board, row, col - 1, word, index) ||
+                existHelper(board, row, col + 1, word, index);
+        board[row][col] = tmp;
+        return result;
+    }
+}
+```
+
+### 电话号码的组合
+
+回溯是一种通过穷举所有可能情况来找到所有解的算法。如果一个候选解最后被发现并不是可行解，回溯算法会舍弃它，并在前面的一些步骤做出一些修改，并重新尝试找到可行解。
+
+时间复杂度n3
+
+```java
+class Solution {
+    private List<String> ans = new ArrayList<>();
+    private String[] strs = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return ans;
+        }
+        StringBuilder sb = new StringBuilder("");
+        letterCombinationsHelper(sb, digits, 0);
+
+        return ans;
+    }
+
+    private void letterCombinationsHelper(StringBuilder sb, String digits, int index) {
+        if (index == digits.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+        int num = digits.charAt(index) - '0' - 2;//数字2到9，对应strs下标0到7
+        for (int i = 0; i < strs[num].length(); i++) {
+            sb.append(strs[num].charAt(i));
+            letterCombinationsHelper(sb, digits, index + 1);
+            sb.deleteCharAt(sb.length() - 1);//function forgot，剪枝
+        } 
+    }
+}
+```
+
+### 复原ip
+
+```java
+class Solution {
+    List<String> res = new ArrayList<>();
+    public List<String> restoreIpAddresses(String s) {
+        dfs(s, 0, 0, new StringBuilder());
+        return res;
+    }
+
+    private void dfs(String s, int start, int ipIndex, StringBuilder sb) {
+        if (ipIndex == 4) {
+            if (start == s.length()) {
+                res.add(sb.substring(0, sb.length() - 1).toString());
+            }
+            return; //长度为4则返回
+        }
+        for (int i = start; i < start + 3 && i < s.length(); i++) {
+            String subStr = s.substring(start, i + 1);
+            int num = Integer.parseInt(subStr);
+            if (num > 255) {
+                return;
+            }
+            sb.append(subStr).append(".");
+            dfs(s, i + 1, ipIndex + 1, sb);
+            sb.delete(sb.length() - (i - start + 2), sb.length());
+            if(s.charAt(start) == '0') { //允许0.0.0.0，其他以0开头的剪枝
+                return;
+            }
+        }
+    }
+}
+```
+
+### 格雷编码
+
+[参考解法](https://leetcode-cn.com/problems/gray-code/solution/gray-code-jing-xiang-fan-she-fa-by-jyd/)
+
+```java
+class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> res = new ArrayList<>();
+        res.add(0);
+        int head = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = res.size() - 1; j >= 0; j--) {
+                res.add(head + res.get(j));
+            }
+            head <<= 1;
+        }
+        return res;
+    }
+}
+```
+
+
+
 ## 贪心算法
 
 对问题求解时，总是做出在当前看来是最好的选择。
@@ -2051,43 +2458,6 @@ class Solution {
 
 
 
-## 电话号码的组合
-
-回溯是一种通过穷举所有可能情况来找到所有解的算法。如果一个候选解最后被发现并不是可行解，回溯算法会舍弃它，并在前面的一些步骤做出一些修改，并重新尝试找到可行解。
-
-时间复杂度n3
-
-```java
-class Solution {
-    private List<String> ans = new ArrayList<>();
-    private String[] strs = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    public List<String> letterCombinations(String digits) {
-        if (digits == null || digits.length() == 0) {
-            return ans;
-        }
-        StringBuilder sb = new StringBuilder("");
-        letterCombinationsHelper(sb, digits, 0);
-
-        return ans;
-    }
-
-    private void letterCombinationsHelper(StringBuilder sb, String digits, int index) {
-        if (index == digits.length()) {
-            ans.add(sb.toString());
-            return;
-        }
-        int num = digits.charAt(index) - '0' - 2;//数字2到9，对应strs下标0到7
-        for (int i = 0; i < strs[num].length(); i++) {
-            sb.append(strs[num].charAt(i));
-            letterCombinationsHelper(sb, digits, index + 1);
-            sb.deleteCharAt(sb.length() - 1);//function forgot，剪枝
-        } 
-    }
-}
-```
-
-
-
 ## 四数之和
 
 时间复杂度n3
@@ -2204,39 +2574,6 @@ class Solution {
 ```
 
 
-
-## 括号生成
-
-使用深度优先算法。
-
-```java
-class Solution {
-    private List<String> ans = new ArrayList<>();
-
-    public List<String> generateParenthesis(int n) {
-        if (n <= 0) {
-            return ans;
-        }
-        dfs("", n, n);
-
-        return ans;
-    }
-
-    //left左括号剩下可用数目，right右括号剩下可用数目
-    private void dfs(String s, int left, int right) {
-        if (left > right || left < 0 || right < 0) {//右括号剩下的少，说明组合无效
-            return;
-        }
-
-        if (left == 0 && right == 0) {
-            ans.add(s);
-        }
-
-        dfs(s + "(", left - 1, right);
-        dfs(s + ")", left, right - 1);
-    }
-}
-```
 
 
 
@@ -2475,62 +2812,6 @@ class Solution {
 
 
 
-## 组合总和
-
-给定一个**无重复元素**的数组 `candidates` 和一个目标数 `target` ，找出 `candidates` 中所有可以使数字和为 `target` 的组合。
-
-```
-输入：candidates = [2,3,6,7], target = 7,
-所求解集为：
-[
-  [7],
-  [2,2,3]
-]
-```
-
-数组元素可能重复。使用回溯算法。
-
-剪枝：
-
-![1587051935261](.\img\1587051935261.png)
-
-去重复组合：
-
-![1587050948930](.\img\1587050948930.png)
-
-```java
-class Solution {
-    private List<List<Integer>> ans = new ArrayList<>();
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        if (candidates == null || candidates.length == 0) {
-            return ans;
-        }
-        Arrays.sort(candidates);//排序方便回溯剪枝
-        Deque<Integer> path = new ArrayDeque<>();//作为栈来使用，效率高于Stack；也可以作为队列来使用，效率高于LinkedList；线程不安全
-        combinationSum2Helper(candidates, target, 0, path);
-        return ans;
-    }
-
-    public void combinationSum2Helper(int[] arr, int target, int start, Deque<Integer> path) {
-        if (target == 0) {
-            ans.add(new ArrayList(path));
-        }
-
-        for (int i = start; i < arr.length; i++) {
-            if (target < arr[i]) {//剪枝
-                return;
-            }
-            if (i > start && arr[i] == arr[i - 1]) {//在一个层级，会产生重复
-                continue;
-            }
-            path.addLast(arr[i]);
-            combinationSum2Helper(arr, target - arr[i], i + 1, path);
-            path.removeLast();
-        }
-    }
-}
-```
-
 
 
 ## 移除元素
@@ -2645,104 +2926,6 @@ class Solution {
         }
 
         return true;
-    }
-}
-```
-
-
-
-## 全排列
-
-给定一个 **没有重复** 数字的序列，返回其所有可能的全排列。
-
-```
-输入: [1,2,3]
-输出:
-[
-  [1,2,3],
-  [1,3,2],
-  [2,1,3],
-  [2,3,1],
-  [3,1,2],
-  [3,2,1]
-]
-```
-
-回溯。注意与组合总和的区别（数字有无顺序）。
-
-```java
-class Solution {
-    private List<List<Integer>> ans = new ArrayList<>();
-    public List<List<Integer>> permute(int[] nums) {
-        boolean[] flag = new boolean[nums.length];
-        ArrayDeque<Integer> path = new ArrayDeque<>();
-        permuteHelper(nums, flag, path);
-
-        return ans;
-    }
-
-    private void permuteHelper(int[] nums, boolean[] flag, ArrayDeque<Integer> path) {
-        if (path.size() == nums.length) {
-            ans.add(new ArrayList<>(path));
-            return;
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (flag[i]) {
-                continue;//继续循环
-            }
-            path.addLast(nums[i]);
-            flag[i] = true;
-            permuteHelper(nums, flag, path);
-            path.removeLast();
-            flag[i] = false;
-        }
-    }
-}
-```
-
-
-
-## 全排列II
-
-给定一个可包含重复数字的序列，返回所有不重复的全排列。注意与组合总和的区别。
-
-1、排序；2、同一层级相同元素剪枝。参考自：https://leetcode-cn.com/problems/permutations-ii/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liwe-2/
-
-![1587518213329](./img/permutations-ii.png)
-
-```java
-class Solution {
-    private List<List<Integer>> ans = new ArrayList<>();
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return ans;
-        }
-        ArrayDeque<Integer> path = new ArrayDeque<>();
-        boolean[] used = new boolean[nums.length];
-        Arrays.sort(nums);//切记
-        dps(nums, used, path);
-
-        return ans;
-    }
-
-    private void dps(int[] nums, boolean[] used, ArrayDeque<Integer> path) {
-        if (path.size() == nums.length) {
-            ans.add(new ArrayList<>(path));
-            return;
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (used[i]) {
-                continue;
-            }
-            if ((i > 0 && nums[i] == nums[i - 1]) && !used[i - 1]) {//同一层相同的元素，剪枝
-                continue;//继续循环，不是return退出循环
-            }
-            path.addLast(nums[i]);
-            used[i] = true;
-            dps(nums, used, path);
-            path.removeLast();
-            used[i] = false;
-        }
     }
 }
 ```
@@ -3285,99 +3468,6 @@ class Solution {
 
 
 
-## 子集
-
-给定一组不含重复元素的整数数组 *nums*，返回该数组所有可能的子集。解集不能包含重复的子集。
-
-回溯。
-
-```java
-class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0) {
-            res.add(new ArrayList<>()); //空集
-            return res;
-        }
-        Stack<Integer> queue = new Stack<>();
-        subsetsHelper(res, queue, 0, nums);
-
-        return res;
-    }
-
-    public void subsetsHelper(List<List<Integer>> res, Stack<Integer> queue, int index, int[] nums) {
-        res.add(new ArrayList<>(queue));
-        
-        for (int i = index; i < nums.length; i++) {
-            queue.push(nums[i]);
-            subsetsHelper(res, queue, i + 1, nums);
-            queue.pop();
-        }
-    }
-}
-```
-
-
-
-## 单词搜索
-
-给定一个二维网格和一个单词，找出该单词是否存在于网格中。
-
-```java
-board =
-[
-  ['A','B','C','E'],
-  ['S','F','C','S'],
-  ['A','D','E','E']
-]
-
-给定 word = "ABCCED", 返回 true
-给定 word = "SEE", 返回 true
-给定 word = "ABCB", 返回 false
-```
-
-注意避免同一元素多次使用（[A B C]，A->B->A）。
-
-```java
-class Solution {
-    public boolean exist(char[][] board, String word) {
-        if (board == null || board.length == 0 || board[0].length == 0) {
-            return false;
-        }
-        for (int i = 0; i < board.length; i++){
-            for (int j = 0; j < board[0].length; j++) {
-                if (existHelper(board, i, j, word, 0)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean existHelper(char[][] board, int row, int col, String word, int index) {
-        if (index == word.length()) {
-            return true;
-        }
-        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(index)) {
-            return false;
-        }
-        if (board[row][col] == word.charAt(index)) {
-            index++;
-        }
-        char tmp = board[row][col];
-        board[row][col] = '#'; //防止回溯自身
-        boolean result = existHelper(board, row - 1, col, word, index) ||
-                existHelper(board, row + 1, col, word, index) || 
-                existHelper(board, row, col - 1, word, index) ||
-                existHelper(board, row, col + 1, word, index);
-        board[row][col] = tmp;
-        return result;
-    }
-}
-```
-
-
-
 ## 删除排序数组的重复项
 
 给定一个排序数组，你需要在**[原地](http://baike.baidu.com/item/原地算法)**删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。双指针。
@@ -3515,98 +3605,6 @@ class Solution {
         rightTmp.next = null; //断开尾巴，防止链表成环
         leftTmp.next = right.next;
         return left.next;
-    }
-}
-```
-
-
-
-## 格雷编码
-
-[参考解法](https://leetcode-cn.com/problems/gray-code/solution/gray-code-jing-xiang-fan-she-fa-by-jyd/)
-
-```java
-class Solution {
-    public List<Integer> grayCode(int n) {
-        List<Integer> res = new ArrayList<>();
-        res.add(0);
-        int head = 1;
-        for (int i = 0; i < n; i++) {
-            for (int j = res.size() - 1; j >= 0; j--) {
-                res.add(head + res.get(j));
-            }
-            head <<= 1;
-        }
-        return res;
-    }
-}
-```
-
-
-
-## 子集II
-
-给定一个可能包含重复元素的整数数组 ***nums***，返回该数组所有可能的子集（幂集）。
-
-```java
-class Solution {
-    private List<List<Integer>> res = new ArrayList<>();
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        Stack<Integer> subset = new Stack<>();
-        subsetsWithDupHelper(nums, 0, subset);
-        return res;
-    }
-
-    private void subsetsWithDupHelper(int[] nums, int index, Stack<Integer> subset) {
-        res.add(new ArrayList<>(subset));
-        if (index >= nums.length) {
-            return;
-        }
-        for (int i = index; i < nums.length; i++) {
-            if (i > index && nums[i] == nums[i - 1]) { //i > index
-                continue;
-            }
-            subset.push(nums[i]);
-            subsetsWithDupHelper(nums, i + 1, subset);
-            subset.pop();
-        }
-    }
-}
-```
-
-
-
-## 复原ip
-
-```java
-class Solution {
-    List<String> res = new ArrayList<>();
-    public List<String> restoreIpAddresses(String s) {
-        dfs(s, 0, 0, new StringBuilder());
-        return res;
-    }
-
-    private void dfs(String s, int start, int ipIndex, StringBuilder sb) {
-        if (ipIndex == 4) {
-            if (start == s.length()) {
-                res.add(sb.substring(0, sb.length() - 1).toString());
-            }
-            return; //长度为4则返回
-        }
-        for (int i = start; i < start + 3 && i < s.length(); i++) {
-            String subStr = s.substring(start, i + 1);
-            int num = Integer.parseInt(subStr);
-            if (num > 255) {
-                return;
-            }
-            sb.append(subStr).append(".");
-            dfs(s, i + 1, ipIndex + 1, sb);
-            sb.delete(sb.length() - (i - start + 2), sb.length());
-            if(s.charAt(start) == '0') { //允许0.0.0.0，其他以0开头的剪枝
-                return;
-            }
-        }
     }
 }
 ```
