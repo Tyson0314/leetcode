@@ -1,6 +1,5 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [动态规划](#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
   - [最长上升子序列](#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97)
@@ -4090,7 +4089,7 @@ class Solution {
             return sum;
         }
 
-        return sum = sumNumbersHelper(node.right, sum) + sumNumbersHelper(node.left, sum);
+        return sumNumbersHelper(node.right, sum) + sumNumbersHelper(node.left, sum);
     }
 }
 ```
@@ -4489,5 +4488,4 @@ class Solution {
     }
 }
 ```
-
 
