@@ -243,7 +243,7 @@ class Solution {
 
 动态规划。`dp[i][j]`表示text1以i-1结尾的子串和text2以j-1结尾的子串的最长公共子序列的长度。dp横坐标或纵坐标为0表示空字符串，`dp[0][j] = dp[i][0] = 0`，无需额外处理base case。
 
-![image-20210217170326851](.\img\longestCommonSubsequence.png)
+![](http://img.topjavaer.cn/image/longestCommonSubsequence.png)
 
 ```java
 class Solution {
@@ -489,13 +489,11 @@ class Solution {
 
 ### 最长回文子串
 
-```
-输入：s = "babad"
-输出："bab"
-解释："aba" 同样是符合题意的答案。
-```
+从给定的字符串 `s` 中找到最长的回文子串的长度。
 
-[动态规划](https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/)
+例如 `s = "babbad"` 的最长回文子串是 `"abba"` ，长度是 `4` 。
+
+解题思路：
 
 1. 定义状态。`dp[i][j]` 表示子串 `s[i..j]` 是否为回文子串
 
@@ -505,7 +503,7 @@ class Solution {
 
 注意事项：总是先得到小子串的回文判定，然后大子串才能参考小子串的判断结果，即填表顺序很重要。
 
-![image-20201115230411764](./img/image-20201115230411764.png)
+![](http://img.dabin-coder.cn/image/image-20201115230411764.png)
 
 时间复杂度O(N2)，空间复杂度O(N2)，因为使用了二维数组。
 
@@ -557,7 +555,7 @@ public class Solution {
 
 ### 单词拆分
 
-![image-20201007205706475](./img/word-break.png)
+![](http://img.topjavaer.cn/image/word-break.png)
 
 ```java
 class Solution {
@@ -717,9 +715,11 @@ class Solution {
 
 给定一个**无重复元素**的数组 `candidates` 和一个目标数 `target` ，找出 `candidates` 中所有可以使数字和为 `target` 的组合。
 
+示例：
+
 ```
 输入：candidates = [2,3,6,7], target = 7,
-所求解集为：
+输出：
 [
   [7],
   [2,2,3]
@@ -730,11 +730,11 @@ class Solution {
 
 剪枝：
 
-![1587051935261](.\img\1587051935261.png)
+![](http://img.dabin-coder.cn/image/1587051935261.png)
 
 去重复组合：
 
-![1587050948930](.\img\1587050948930.png)
+![](http://img.dabin-coder.cn/image/1587050948930.png)
 
 ```java
 class Solution {
@@ -775,6 +775,8 @@ class Solution {
 
 给定一个 **没有重复** 数字的序列，返回其所有可能的全排列。
 
+示例：
+
 ```
 输入: [1,2,3]
 输出:
@@ -788,7 +790,7 @@ class Solution {
 ]
 ```
 
-回溯。注意与组合总和的区别（数字有无顺序）。
+使用回溯。注意与组合总和的区别（数字有无顺序）。
 
 ```java
 class Solution {
@@ -828,7 +830,7 @@ class Solution {
 
 1、排序；2、同一层级相同元素剪枝。参考自：https://leetcode-cn.com/problems/permutations-ii/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liwe-2/
 
-![1587518213329](./img/permutations-ii.png)
+![](http://img.dabin-coder.cn/image/permutations-ii.png)
 
 ```java
 class Solution {
@@ -1120,11 +1122,34 @@ class Solution {
 
 ## 贪心算法
 
-对问题求解时，总是做出在当前看来是最好的选择。
+贪心算法，是寻找**最优解问题**的常用方法，这种方法模式一般将求解过程分成**若干个步骤**，但每个步骤都应用贪心原则，选取当前状态下**最好/最优的选择**（局部最有利的选择），并以此希望最后堆叠出的结果也是最好/最优的解。
+
+**贪婪法的基本步骤：**
+
+1. 从某个初始解出发；
+2. 采用迭代的过程，当可以向目标前进一步时，就根据局部最优策略，得到一部分解，缩小问题规模；
+3. 将所有解综合起来。
 
 ### 买卖股票的最佳时机 II
 
-可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+**题目描述**：
+
+给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
+
+在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
+
+返回 你能获得的 最大 利润 。
+
+**示例**：
+
+```java
+输入：prices = [1,2,3,4,5]
+输出：4
+解释：在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+     总利润为 4 。
+```
+
+思路：可以尽可能地完成更多的交易，但不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
 
 ```java
 //输入: [7,1,5,3,6,4]
@@ -1146,9 +1171,27 @@ class Solution {
 
 ### 跳跃游戏
 
-给定一个非负整数数组，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。判断你是否能够到达最后一个位置。
+**题目描述**
 
-贪心算法。
+给定一个非负整数数组 `nums` ，你最初位于数组的 **第一个下标** 。
+
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+判断你是否能够到达最后一个下标。
+
+**示例**：
+
+```java
+输入：nums = [2,3,1,1,4]
+输出：true
+解释：可以先跳 1 步，从下标 0 到达下标 1, 然后再从下标 1 跳 3 步到达最后一个下标。
+```
+
+解题思路：
+
+1. 如果某一个作为 起跳点 的格子可以跳跃的距离是 3，那么表示后面 3 个格子都可以作为 起跳点
+2. 可以对每一个能作为 起跳点 的格子都尝试跳一次，把 能跳到最远的距离 不断更新
+3. 如果可以一直跳到最后，就成功了
 
 ```java
 class Solution {
@@ -1173,29 +1216,387 @@ class Solution {
 
 ### 加油站
 
-在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+**题目描述**
+
+在一条环路上有 n 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
 
 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
 
-如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+给定两个整数数组 gas 和 cost ，如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1 。如果存在解，则 保证 它是 唯一 的。
+
+**示例**
+
+```java
+输入: gas = [1,2,3,4,5], cost = [3,4,5,1,2]
+输出: 3
+解释:
+从 3 号加油站(索引为 3 处)出发，可获得 4 升汽油。此时油箱有 = 0 + 4 = 4 升汽油
+开往 4 号加油站，此时油箱有 4 - 1 + 5 = 8 升汽油
+开往 0 号加油站，此时油箱有 8 - 2 + 1 = 7 升汽油
+开往 1 号加油站，此时油箱有 7 - 3 + 2 = 6 升汽油
+开往 2 号加油站，此时油箱有 6 - 4 + 3 = 5 升汽油
+开往 3 号加油站，你需要消耗 5 升汽油，正好足够你返回到 3 号加油站。
+因此，3 可为起始索引。
+```
+
+**思路**：
+
+1. 遍历一周，总获得的油量少于要花掉的油量必然没有结果；
+2. 先苦后甜，记录遍历时所存的油量最少的站点，由于题目有解只有唯一解，所以从当前站点的下一个站点开始是唯一可能成功开完全程的。
 
 ```java
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int len = gas.length;
-        for (int i = 0; i < len; i++) {
-            int j = i;
-            int retain = 0; //剩余油量
-            while (retain + gas[j] - cost[j] >= 0) {
-                retain = retain + gas[j] - cost[j];
-                j = (j + 1) % len;
-                if (j == i) {
-                    return i;
+        int minIdx=0;
+        int sum=Integer.MAX_VALUE;
+        int num=0;
+        for (int i = 0; i < gas.length; i++) {
+            num+=gas[i]-cost[i];
+            if(num<sum){
+                sum=num;
+                minIdx=i;
+            }
+        }
+        return num<0?-1:(minIdx+1)%gas.length;
+    }
+}
+```
+
+
+
+## 双指针
+
+### 反转链表
+
+**题目描述**
+
+给你单链表的头节点 `head` ，请你反转链表，并返回反转后的链表。
+
+**示例**
+
+```java
+输入：head = [1,2,3,4,5]
+输出：[5,4,3,2,1]
+```
+
+思路：
+
+1. 定义两个指针，第一个指针叫 pre，最初是指向 null 的。
+2. 第二个指针 cur 指向 head，然后不断遍历 cur。
+3. 每次迭代到 cur，都将 cur 的 next 指向 pre，然后 pre 和 cur 前进一位。
+4. 都迭代完了(cur 变成 null 了)，pre 就是最后一个节点了。
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode tmp = null;
+        while (cur != null) {
+            tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+
+        return pre;
+    }
+}
+```
+
+
+
+### 反转链表II
+
+**题目描述**
+
+给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+
+**示例**
+
+```java
+输入：head = [1,2,3,4,5], left = 2, right = 4
+输出：[1,4,3,2,5]
+```
+
+**思路**：双指针+头插法。
+
+```java
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 1; i < m; i++) {
+            pre = pre.next;
+        }
+        head = pre.next;
+        for (int i = m; i < n; i++) {
+            ListNode cur = head.next;
+            head.next = cur.next;
+            cur.next = pre.next;
+            pre.next = cur;
+        }
+
+        return dummy.next;
+    }
+}
+```
+
+### 删除链表倒数第n个节点
+
+**题目描述**
+
+给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+
+**示例**
+
+```java
+输入：head = [1,2,3,4,5], n = 2
+输出：[1,2,3,5]
+```
+
+思路：使用快慢指针，快指针先走n步。
+
+```java
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode tmp = new ListNode(0); //技巧
+        tmp.next = head;
+
+        ListNode fast = tmp;
+        ListNode slow = tmp;
+
+        while (n-- > 0) {
+            fast = fast.next;
+        }
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+
+        return tmp.next;
+    }
+}
+```
+
+### 三数之和
+
+[题目链接](https://leetcode.cn/problems/3sum/)
+
+**题目描述**
+
+给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+
+**示例**
+
+```java
+输入：nums = [-1,0,1,2,-1,-4]
+输出：[[-1,-1,2],[-1,0,1]]
+```
+
+**思路**：
+
+- 首先对数组进行排序，排序后固定一个数 nums[i]nums[i]，再使用左右指针指向 nums[i]nums[i]后面的两端，数字分别为 nums[L]nums[L] 和
+- nums[R]nums[R]，计算三个数的和 sumsum 判断是否满足为 00，满足则添加进结果集
+- 如果 nums[i]nums[i]大于 00，则三数之和必然无法等于 00，结束循环
+- 如果 nums[i]nums[i] == nums[i-1]nums[i−1]，则说明该数字重复，会导致结果重复，所以应该跳过
+- 当 sumsum == 00 时，nums[L]nums[L] == nums[L+1]nums[L+1] 则会导致结果重复，应该跳过，L++L++
+- 当 sumsum == 00 时，nums[R]nums[R] == nums[R-1]nums[R−1] 则会导致结果重复，应该跳过，R--R−−
+
+
+**参考代码**：
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) { //最左边的数字大于0，则sum不会等于0，退出
+                break;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) { //去重复
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    res.add(Arrays.asList(nums[i], nums[left], nums[right])); ///array to list
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    left++;
+                    right--;
+                } else if (sum > 0) {
+                    right--;
+                } else {
+                    left++;
                 }
             }
         }
 
-        return -1;
+        return res;
+    }
+}
+```
+
+### 环形链表
+
+[题目链接](https://leetcode.cn/problems/linked-list-cycle/)
+
+**题目描述**
+
+给你一个链表的头节点 head ，判断链表中是否有环。
+
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。注意：pos 不作为参数进行传递 。仅仅是为了标识链表的实际情况。
+
+如果链表中存在环 ，则返回 true 。 否则，返回 false 。
+
+**示例**
+
+```java
+输入：head = [3,2,0,-4], pos = 1
+输出：true
+解释：链表中有一个环，其尾部连接到第二个节点。
+```
+
+**思路**
+
+快慢指针。快指针每次走两步，慢指针走一步，相当于慢指针不动，快指针每次走一步，如果是环形链表，则一定会相遇。
+
+```java
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+
+        ListNode quick = head;
+        ListNode slow = head;
+
+        while (quick != null && quick.next != null) {
+            slow = slow.next;
+            quick = quick.next.next;
+            
+            if (slow == quick) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+```
+
+### 环形链表II
+
+[题目链接](https://leetcode.cn/problems/linked-list-cycle-ii/)
+
+**题目描述**
+
+给定一个链表的头节点  head ，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。
+
+不允许修改 链表。
+
+**示例**
+
+```java
+输入：head = [3,2,0,-4], pos = 1
+输出：返回索引为 1 的链表节点
+解释：链表中有一个环，其尾部连接到第二个节点
+```
+
+**解题思路**
+
+方法一：头结点到入环结点的距离为a，入环结点到相遇结点的距离为b，相遇结点到入环结点的距离为c。然后，当fast以slow的两倍速度前进并和slow相遇时，fast走过的距离是s的两倍，即有等式：a+b+c+b = 2(a+b) ，可以得出 a = c ，所以说，让fast和slow分别从相遇结点和头结点同时同步长出发，他们的相遇结点就是入环结点。
+
+```java
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (true) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                break;
+            }
+        }
+
+        fast = head;
+ 
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return fast;
+    }
+}
+```
+
+方法二：先算出环的大小n，快指针先走n步，然后快慢指针一起走，相遇的地方即是环的入口。
+
+```java
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+	    //快慢指针找出环的大小
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (fast == slow) {
+                break;
+            }
+        }
+
+        if (fast == null || fast.next == null) {
+            return null;
+        }
+        
+        int cycleSize = 1;
+        while (fast.next != slow) {
+            cycleSize++;
+            fast = fast.next;
+        }
+
+        //快慢指针重新从链表首部出发，快指针先走sizeOfCycle步
+        //然后两个指针同时一起走，步长为1，相遇节点即是环的入口
+        fast = head;
+        slow = head;
+        while (cycleSize-- > 0) {
+            fast = fast.next;
+        }
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return fast;
     }
 }
 ```
@@ -1398,106 +1799,6 @@ public class Solution {
 ```
 
 
-
-## 反转链表
-
-```java
-class Solution {
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-
-        ListNode pre = null;
-        ListNode cur = head;
-        ListNode tmp = null;
-        while (cur != null) {
-            tmp = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = tmp;
-        }
-
-        return pre;
-    }
-}
-```
-
-
-
-## 反转链表II
-
-反转从位置 *m* 到 *n* 的链表。请使用一趟扫描完成反转。头插法。
-
-```java
-class Solution {
-    public ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode pre = dummy;
-        for (int i = 1; i < m; i++) {
-            pre = pre.next;
-        }
-        head = pre.next;
-        for (int i = m; i < n; i++) {
-            ListNode cur = head.next;
-            head.next = cur.next;
-            cur.next = pre.next;
-            pre.next = cur;
-        }
-
-        return dummy.next;
-    }
-}
-```
-
-
-
-## K 个一组翻转链表
-
-![image-20201210003709350](./img/k-reverse-listnode.png)
-
-```java
-class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode pre = dummy;
-        ListNode end = dummy;
-        while (end.next != null) {
-            for (int i = 0; i < k && end != null; i++) {
-                end = end.next;
-            }
-            if (end == null) {
-                break;
-            }
-            ListNode start = pre.next;
-            ListNode next = end.next;
-            end.next = null;
-            pre.next = reverse(start, k);
-            start.next = next;
-
-            pre = start;
-            end = pre;
-        }
-
-        return dummy.next;
-    }
-
-    private ListNode reverse(ListNode node, int k) {
-        ListNode pre = null;
-        ListNode cur = node;
-        while (k-- > 0) {
-            ListNode next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
-        }
-
-        return pre;
-    }
-}
-```
 
 
 
@@ -1881,58 +2182,6 @@ class Solution {
 
 
 
-## 三数之和
-
-先排序。从左边开始，固定一个数 nums[i]，然后使用双指针（nums[i+1]和nums[right]）。
-
-注意去除重复三元组。
-
-![1586533893125](.\img\1586533893125.png)
-
-![1586534003083](.\img\1586534003083.png)
-
-```java
-class Solution {
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        Arrays.sort(nums);
-
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0) { //最左边的数字大于0，则sum不会等于0，退出
-                break;
-            }
-            if (i > 0 && nums[i] == nums[i - 1]) { //去重复
-                continue;
-            }
-
-            int left = i + 1;
-            int right = nums.length - 1;
-
-            while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
-                if (sum == 0) {
-                    res.add(Arrays.asList(nums[i], nums[left], nums[right])); ///array to list
-                    while (left < right && nums[left] == nums[left + 1]) {
-                        left++;
-                    }
-                    while (left < right && nums[right] == nums[right - 1]) {
-                        right--;
-                    }
-                    left++;
-                    right--;
-                } else if (sum > 0) {
-                    right--;
-                } else {
-                    left++;
-                }
-            }
-        }
-
-        return res;
-    }
-}
-```
-
 
 
 ## 二叉树锯齿形层次遍历
@@ -2273,7 +2522,7 @@ class Solution {
 
 [排序链表快速排序](https://www.cnblogs.com/morethink/p/8452914.html)
 
-![](.\img\sort-list.png)
+![](http://img.topjavaer.cn/image/sort-list.png)
 
 ```java
 //快速排序
@@ -2432,7 +2681,7 @@ class Solution {
 
 ## 盛最多水的容器
 
-![1586272990587](.\img\1586272990587.png)
+![](http://img.topjavaer.cn/image/1586272990587.png)
 
 左右指针，数字小的指针往数字大的指针移动，面积才有可能变大。注意左右指针数字相同的情况。
 
@@ -2511,34 +2760,6 @@ class Solution {
 ```
 
 
-
-## 删除链表倒数第n个节点
-
-使用快慢指针，快指针先走n步。给定的 *n* 保证是有效的。
-
-```java
-class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode tmp = new ListNode(0); //技巧
-        tmp.next = head;
-
-        ListNode fast = tmp;
-        ListNode slow = tmp;
-
-        while (n-- > 0) {
-            fast = fast.next;
-        }
-
-        while (fast.next != null) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-        slow.next = slow.next.next;
-
-        return tmp.next;
-    }
-}
-```
 
 
 
@@ -2728,7 +2949,7 @@ class Solution {
 
 特殊情况：数组降序排列，返回升序的数组。
 
-![1586876929532](.\img\nextPermutation.png)
+![](http://img.topjavaer.cn/image/nextPermutation.png)
 
 ```java
 class Solution {
@@ -2854,7 +3075,7 @@ class Solution {
 
 参考自：https://leetcode-cn.com/problems/multiply-strings/solution/you-hua-ban-shu-shi-da-bai-994-by-breezean/
 
-![1587226241610](.\img\1587226241610.png)
+![](http://img.topjavaer.cn/image/1587226241610.png)
 
 ```java
 class Solution {
@@ -2898,7 +3119,7 @@ class Solution {
 
 关键在于找到子数独的规律：`box_index = (row / 3) * 3 + columns / 3`
 
-![1587260486363](.\img\1587260486363.png)
+![](http://img.topjavaer.cn/image/1587260486363.png)
 
 ```java
 class Solution {
@@ -2984,7 +3205,7 @@ class Solution {
 
 将字符串转化成字符数组并排序。
 
-![1587655391555](.\img\1587655391555.png)
+![](http://img.topjavaer.cn/image/1587655391555.png)
 
 ```java
 class Solution {
@@ -3436,7 +3657,7 @@ class Solution {
 
 给定两个整数 *n* 和 *k*，返回 1 ... *n* 中所有可能的 *k* 个数的组合。回溯。剪枝优化。
 
-![image-20200526090917688](./img/image-20200526090917688.png)
+![](http://img.topjavaer.cn/image/image-20200526090917688.png)
 
 ```java
 class Solution {
@@ -3846,7 +4067,7 @@ class Solution {
 
 给定一个非负索引 *k*，其中 *k* ≤ 33，返回杨辉三角的第 *k* 行，k 从0开始。
 
-![image-20200709093301109](./img/yanghui-triangle.png)
+![](http://img.topjavaer.cn/image/yanghui-triangle.png)
 
 ```java
 class Solution {
@@ -4205,114 +4426,6 @@ class Solution {
 
 方法2：1、复制节点并插入当前节点后面；2、再设定好random指针；3、最后分离出原链表与副本链表
 如： 1->2->3->null => 1->1'->2->2'->3->3'->null ； 再分离出 1->2->3->null 与 1'->2'->3'->null
-
-
-
-## 环形链表
-
-快慢指针。快指针每次走两步，慢指针走一步，相当于慢指针不动，快指针每次走一步，如果是环形链表，则一定会相遇。
-
-```java
-public class Solution {
-    public boolean hasCycle(ListNode head) {
-        if (head == null) {
-            return false;
-        }
-
-        ListNode quick = head;
-        ListNode slow = head;
-
-        while (quick != null && quick.next != null) {
-            slow = slow.next;
-            quick = quick.next.next;
-            
-            if (slow == quick) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-}
-```
-
-
-
-## 环形链表II
-
-方法一：头结点到入环结点的距离为a，入环结点到相遇结点的距离为b，相遇结点到入环结点的距离为c。然后，当fast以slow的两倍速度前进并和slow相遇时，fast走过的距离是s的两倍，即有等式：a+b+c+b = 2(a+b) ，可以得出 a = c ，所以说，让fast和slow分别从相遇结点和头结点同时同步长出发，他们的相遇结点就是入环结点。
-
-```java
-public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        ListNode fast = head;
-        ListNode slow = head;
-
-        while (true) {
-            if (fast == null || fast.next == null) {
-                return null;
-            }
-            fast = fast.next.next;
-            slow = slow.next;
-            if (fast == slow) {
-                break;
-            }
-        }
-
-        fast = head;
- 
-        while (slow != fast) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-
-        return fast;
-    }
-}
-```
-
-方法二：先算出环的大小n，快指针先走n步，然后快慢指针一起走，相遇的地方即是环的入口。
-
-```java
-public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head;
-	    //快慢指针找出环的大小
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if (fast == slow) {
-                break;
-            }
-        }
-
-        if (fast == null || fast.next == null) {
-            return null;
-        }
-        
-        int cycleSize = 1;
-        while (fast.next != slow) {
-            cycleSize++;
-            fast = fast.next;
-        }
-
-        //快慢指针重新从链表首部出发，快指针先走sizeOfCycle步
-        //然后两个指针同时一起走，步长为1，相遇节点即是环的入口
-        fast = head;
-        slow = head;
-        while (cycleSize-- > 0) {
-            fast = fast.next;
-        }
-        while (fast != slow) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-
-        return fast;
-    }
-}
-```
 
 
 
